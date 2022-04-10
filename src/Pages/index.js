@@ -14,6 +14,7 @@ export default class index extends Component {
         <Router>
           <Navbar />
           <br />
+          <br />
           <Switch>
             <Route exact path="/">
               <ItemsList />

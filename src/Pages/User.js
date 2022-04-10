@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import "../form.css";
 
 export default class User extends Component {
   constructor(props) {
@@ -50,10 +51,10 @@ export default class User extends Component {
 
   render() {
     return (
-      <div>
+      <div id="item">
         <h3>Creating New User</h3>
         <form onSubmit={this.onSubmit}>
-          <div>
+          <div className="divs">
             <label>Type</label>
             <select
               required
@@ -64,7 +65,7 @@ export default class User extends Component {
               <option>Stuff</option>
             </select>
           </div>
-          <div>
+          <div className="divs">
             <label>Email</label>
             <input
               type="text"
@@ -73,7 +74,7 @@ export default class User extends Component {
               onChange={this.onChangeEmail}
             />
           </div>
-          <div>
+          <div className="divs">
             <label>Password</label>
             <input
               type="text"
@@ -84,7 +85,7 @@ export default class User extends Component {
           </div>
 
           <div>
-            <input type="submit" value="Add New User" />
+            <input className="button" type="submit" value="Join Us!" />
           </div>
         </form>
       </div>

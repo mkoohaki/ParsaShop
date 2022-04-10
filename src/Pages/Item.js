@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import "../form.css";
 
 export default class Item extends Component {
   constructor(props) {
@@ -98,10 +99,10 @@ export default class Item extends Component {
 
   render() {
     return (
-      <div>
+      <div id="item">
         <h3>Creating New Item</h3>
         <form onSubmit={this.onSubmit}>
-          <div>
+          <div className="divs">
             <label>Type</label>
             <select
               required
@@ -114,7 +115,7 @@ export default class Item extends Component {
               <option>Others</option>
             </select>
           </div>
-          <div>
+          <div className="divs">
             <label>Brand</label>
             <input
               type="text"
@@ -123,7 +124,7 @@ export default class Item extends Component {
               onChange={this.onChangeBrand}
             />
           </div>
-          <div>
+          <div className="divs">
             <label>Model</label>
             <input
               type="text"
@@ -132,7 +133,7 @@ export default class Item extends Component {
               onChange={this.onChangeModel}
             />
           </div>
-          <div>
+          <div className="divs">
             <label>Color</label>
             <input
               type="text"
@@ -141,7 +142,7 @@ export default class Item extends Component {
               onChange={this.onChangeColor}
             />
           </div>
-          <div>
+          <div className="divs">
             <label>Sex</label>
             <input
               type="text"
@@ -150,7 +151,7 @@ export default class Item extends Component {
               onChange={this.onChangeSex}
             />
           </div>
-          <div>
+          <div className="divs">
             <label>Size</label>
             <input
               type="text"
@@ -159,7 +160,7 @@ export default class Item extends Component {
               onChange={this.onChangeSize}
             />
           </div>
-          <div>
+          <div className="divs">
             <label>Description</label>
             <input
               type="text"
@@ -168,7 +169,7 @@ export default class Item extends Component {
               onChange={this.onChangeDescription}
             />
           </div>
-          <div>
+          <div className="divs">
             <label>Year</label>
             <input
               type="text"
@@ -177,7 +178,7 @@ export default class Item extends Component {
               onChange={this.onChangeYear}
             />
           </div>
-          <div>
+          <div className="divs">
             <label>Price</label>
             <input
               type="text"
@@ -187,7 +188,7 @@ export default class Item extends Component {
             />
           </div>
           <div>
-            <input type="submit" value="Add New Item" />
+            <input className="button" type="submit" value="Add New Item" />
           </div>
         </form>
       </div>
