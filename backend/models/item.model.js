@@ -23,7 +23,7 @@ const itemSchema = new Schema(
       required: true,
     },
     size: {
-      type: Array,
+      type: Object,
       required: true,
     },
     description: {
