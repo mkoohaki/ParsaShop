@@ -13,6 +13,7 @@ export default class index extends Component {
       <div>
         <Router>
           <Navbar />
+          <img src="../../logo.svg" alt="" className="logo" />
           <br />
           <br />
           <Switch>

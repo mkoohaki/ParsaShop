@@ -11,6 +11,17 @@ body{
     'Open Sans', 'Helvetica Neue', sans-serif;
     background: #f2e5f2;
     color: #222;
+    min-height: 100vh;
+    background: #c850c0;
+    background: -webkit-linear-gradient(45deg, #4158d0, #c850c0);
+    background: -o-linear-gradient(45deg, #4158d0, #c850c0);
+    background: -moz-linear-gradient(45deg, #4158d0, #c850c0);
+    background: linear-gradient(45deg, #4158d0, #c850c0);
+    
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
 }
 
 ul, li {
@@ -35,7 +46,7 @@ ul a {
     display: block;
     width: 100%;
     color: #ffffff;
-    background-color: #800080;
+    border: 4px solid #ffa9ff;
     height: 50px;
     line-height: 50px;
     border-bottom-left-radius: 30px;
@@ -58,17 +69,6 @@ ul li:hover a:hover {
 
 .container-table100 {
     width: 100%;
-    min-height: 100vh;
-    background: #c850c0;
-    background: -webkit-linear-gradient(45deg, #4158d0, #c850c0);
-    background: -o-linear-gradient(45deg, #4158d0, #c850c0);
-    background: -moz-linear-gradient(45deg, #4158d0, #c850c0);
-    background: linear-gradient(45deg, #4158d0, #c850c0);
-
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -295,4 +295,12 @@ tbody tr:hover {
         padding-left: 15px;
         padding-right: 15px;
     }
+}
+
+.logo {
+    position: relative;
+    margin-top: 50px;
+filter: invert(96%) sepia(72%) saturate(5965%) hue-rotate(161deg) brightness(106%) contrast(106%);
+    width: 20%;
+    left: 40%;
 }
