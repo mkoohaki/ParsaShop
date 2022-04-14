@@ -29,17 +29,27 @@ const itemSchema = new Schema(
     description: {
       type: String,
     },
-    year: {
-      type: Number,
-    },
-    price: {
+    qty: {
       type: Number,
       required: true,
     },
-    // date: {
-    //   type: Date,
-    //   required: true,
-    // },
+    buyFrom: {
+      type: String,
+    },
+    buyPrice: {
+      type: Number,
+      required: true,
+    },
+    buyDate: {
+      type: Date,
+      required: true,
+    },
+    soldPrice: {
+      type: Number,
+    },
+    soldDate: {
+      type: Date,
+    },
   },
   { timestamps: true }
 );

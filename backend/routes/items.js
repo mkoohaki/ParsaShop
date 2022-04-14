@@ -29,8 +29,12 @@ router.route("/update/:id").post((req, res) => {
       item.sex = req.body.sex;
       item.size = req.body.size;
       item.description = req.body.description;
-      item.year = req.body.year;
-      item.price = req.body.price;
+      item.qty = Number(req.body.qty);
+      item.buyFrom = req.body.buyFrom;
+      item.buyPrice = Number(req.body.buyPrice);
+      item.buyDate = Date.parse(req.body.buyDate);
+      item.soldPrice = Number(req.body.soldPrice);
+      item.soldDate = Date.parse(req.body.soldDate);
 
       item
         .save()
@@ -48,8 +52,12 @@ router.route("/add").post((req, res) => {
   const sex = req.body.sex;
   const size = req.body.size;
   const description = req.body.description;
-  const year = Number(req.body.year);
-  const price = Number(req.body.price);
+  const qty = Number(req.body.qty);
+  const buyFrom = req.body.buyFrom;
+  const buyPrice = Number(req.body.buyPrice);
+  const buyDate = Date.parse(req.body.buyDate);
+  const soldPrice = Number(req.body.soldPrice);
+  const soldDate = Date.parse(req.body.soldDate);
 
   const newItem = new Item({
     type,
@@ -59,8 +67,12 @@ router.route("/add").post((req, res) => {
     sex,
     size,
     description,
-    year,
-    price,
+    qty,
+    buyFrom,
+    buyPrice,
+    buyDate,
+    soldPrice,
+    soldDate,
   });
 
   newItem

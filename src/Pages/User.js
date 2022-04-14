@@ -51,7 +51,7 @@ export default class User extends Component {
 
   render() {
     return (
-      <div id="item">
+      <div id="user">
         <h3>Creating New User</h3>
         <form onSubmit={this.onSubmit}>
           <div className="divs">

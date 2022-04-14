@@ -77,7 +77,7 @@ ul li:hover a:hover {
 }
 
 .wrap-table100 {
-    width: 1170px;
+    width: 95%;
 }
 
 table {
@@ -162,22 +162,22 @@ tbody tr:hover {
 }
 
 .column1 {
-    width: 7%;
+    width: 5%;
     text-align: center;
 }
 
 .column2 {
-    width: 10%;
+    width: 7%;
     text-align: center;
 }
 
 .column3 {
-    width: 10%;
+    width: 7%;
         text-align: center;
 }
 
 .column4 {
-    width: 10%;
+    width: 7%;
     text-align: center;
 }
 
@@ -187,19 +187,39 @@ tbody tr:hover {
 }
 
 .column6 {
-    width: 23%;
+    width: 14%;
     text-align: center;
 }
 .column7 {
-    width: 20%;
+    width: 3%;
     text-align: center;
 }
 .column8 {
-    width: 5%;
+    width: 14%;
     text-align: center;
 }
 .column9 {
-    width: 10%;
+    width: 7%;
+    text-align: center;
+}
+.column10 {
+    width: 5%;
+    text-align: center;
+}
+.column11 {
+    width: 7%;
+    text-align: center;
+}
+.column12 {
+    width: 5%;
+    text-align: center;
+}
+.column13 {
+    width: 7%;
+    text-align: center;
+}
+.column14 {
+    width: 7%;
     text-align: center;
 }
 
@@ -270,21 +290,6 @@ tbody tr:hover {
         content: "Total";
     }
 
-    .column4,
-    .column5,
-    .column6 {
-        text-align: left;
-    }
-
-    .column4,
-    .column5,
-    .column6,
-    .column1,
-    .column2,
-    .column3 {
-        width: 100%;
-    }
-
     tbody tr {
         font-size: 14px;
     }
@@ -303,4 +308,29 @@ tbody tr:hover {
 filter: invert(96%) sepia(72%) saturate(5965%) hue-rotate(161deg) brightness(106%) contrast(106%);
     width: 20%;
     left: 40%;
+}
+
+.edit {
+    border: 3px solid green;
+    background-color: green;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+}
+.edit:hover {
+    border: 3px solid darkgreen;
+    background-color: darkgreen;
+    border-radius: 10px;
+}
+.delete {
+    border: 3px solid red;
+    background-color: red;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+}
+.delete:hover {
+    border: 3px solid darkred;
+    background-color: darkred;
+    border-radius: 10px;
 }
