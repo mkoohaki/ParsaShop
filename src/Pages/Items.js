@@ -1,18 +1,25 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import PopUp from "./PopUp";
 
 const Item = (props) => (
-  <tr>
+  <tr onClick={() => props.openDetail(props.item._id)}>
     <td className="column1">{props.item.type}</td>
     <td className="column2">{props.item.brand}</td>
     <td className="column3">{props.item.model}</td>
     <td className="column4">{props.item.color}</td>
     <td className="column5">{props.item.sex}</td>
     <td className="column6">
-      {Object.entries(props.item.size).map(([key, value]) => {
-        if (value === true) return key + " / ";
-      })}
+      {Object.entries(props.item.size)
+        .filter(([key, value]) => value === true)
+        .map(([key, value], i, arr) => {
+          if (arr.length - 1 === i) {
+            return key;
+          } else {
+            return key + " / ";
+          }
+        })}
     </td>
     <td className="column7">{props.item.qty}</td>
     <td className="column8">{props.item.description}</td>
@@ -37,6 +44,10 @@ const Item = (props) => (
       >
         Delete
       </a>
+      |
+      <button className="sold" onClick={() => props.soldItem(props.item._id)}>
+        Sold
+      </button>
     </td>
   </tr>
 );
@@ -46,9 +57,12 @@ export default class Items extends Component {
     super(props);
 
     this.deleteItem = this.deleteItem.bind(this);
+    this.soldItem = this.soldItem.bind(this);
+    this.openDetail = this.openDetail.bind(this);
 
     this.state = {
       items: [],
+      seen: false,
     };
   }
 
@@ -70,6 +84,34 @@ export default class Items extends Component {
     });
   }
 
+  soldItem(id) {
+    this.setState({
+      seen: !this.state.seen,
+    });
+
+    // axios.get("http://localhost:5000/items/" + id).then((res) => {
+    //   const item = {
+    //     type: res.data.type,
+    //     brand: res.data.brand,
+    //     model: res.data.model,
+    //     color: res.data.color,
+    //     sex: res.data.sex,
+    //     size: res.data.size,
+    //     description: res.data.description,
+    //     qty: res.data.qty,
+    //     buyFrom: res.data.buyFrom,
+    //     buyPrice: res.data.buyPrice,
+    //     buyDate: res.data.buyDate,
+    //     soldPrice: 300,
+    //     soldDate: new Date(),
+    //   };
+    // axios
+    //   .post("http://localhost:5000/items/update/" + id, item)
+    //   .then((res) => console.log(res.data));
+    // });
+    // window.location.reload(false);
+  }
+
   itemsList() {
     return this.state.items.map((currentItem) => {
       return (
@@ -77,14 +119,38 @@ export default class Items extends Component {
           item={currentItem}
           key={currentItem._id}
           deleteItem={this.deleteItem}
+          soldItem={this.soldItem}
+          openDetail={this.openDetail}
         />
       );
     });
   }
 
+  openDetail(id) {
+    window.location = "/details/" + id;
+  }
+
+  updateEvents = (events, callback = () => {}) => {
+    this.setState(
+      {
+        events,
+      },
+      callback
+    );
+  };
+
   render() {
     return (
       <div className="limiter">
+        {this.state.seen ? (
+          <PopUp
+            updateEvents={this.updateEvents}
+            ref={this.ModalAjoutb}
+            id_user={this.state.id_user}
+            events={this.state.events}
+          />
+        ) : null}
+        {/* <PopUp toggle={this.togglePop} /> */}
         <div className="container-table100">
           <div className="wrap-table100">
             <div className="table100">

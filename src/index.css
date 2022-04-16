@@ -187,7 +187,7 @@ tbody tr:hover {
 }
 
 .column6 {
-    width: 14%;
+    width: 13%;
     text-align: center;
 }
 .column7 {
@@ -195,7 +195,7 @@ tbody tr:hover {
     text-align: center;
 }
 .column8 {
-    width: 14%;
+    width: 13%;
     text-align: center;
 }
 .column9 {
@@ -219,7 +219,7 @@ tbody tr:hover {
     text-align: center;
 }
 .column14 {
-    width: 7%;
+    width: 9%;
     text-align: center;
 }
 
@@ -305,9 +305,13 @@ tbody tr:hover {
 .logo {
     position: relative;
     margin-top: 50px;
-filter: invert(96%) sepia(72%) saturate(5965%) hue-rotate(161deg) brightness(106%) contrast(106%);
+    filter: invert(96%) sepia(72%) saturate(5965%) hue-rotate(161deg) brightness(106%) contrast(106%);
     width: 20%;
     left: 40%;
+}
+
+.logo:hover {
+    filter: invert(100%) sepia(41%) saturate(1912%) hue-rotate(216deg) brightness(108%) contrast(100%);
 }
 
 .edit {
@@ -333,4 +337,17 @@ filter: invert(96%) sepia(72%) saturate(5965%) hue-rotate(161deg) brightness(106
     border: 3px solid darkred;
     background-color: darkred;
     border-radius: 10px;
+}
+.sold {
+        border: 3px solid blue;
+        background-color: blue;
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        font-size: 17px;
+}
+.sold:hover {
+        border: 3px solid darkblue;
+        background-color: darkblue;
+        border-radius: 10px;
 }

@@ -6,6 +6,7 @@ import CreateUser from "./User";
 import CreateItem from "./Item";
 import EditItem from "./EditItem";
 import ItemsList from "./Items";
+import ItemDetails from "./ItemDetails";
 
 export default class index extends Component {
   render() {
@@ -30,6 +31,10 @@ export default class index extends Component {
             <Route path="/user">
               <CreateUser />
             </Route>
+            <Route
+              path="/details/:id"
+              render={(props) => <ItemDetails {...props} />}
+            />
           </Switch>
         </Router>
       </div>
