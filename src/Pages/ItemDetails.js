@@ -46,9 +46,9 @@ export default class ItemDetails extends Component {
       qty: 0,
       buyFrom: "",
       buyPrice: 0.0,
-      buyDate: new Date(),
+      buyDate: "",
       soldPrice: 0.0,
-      soldDate: 0,
+      soldDate: "",
     };
   }
 
@@ -56,21 +56,50 @@ export default class ItemDetails extends Component {
     axios
       .get("http://localhost:5000/items/" + this.props.match.params.id)
       .then((item) => {
-        console.log(item.data);
         this.setState({
+          id: item.data._id,
           type: item.data.type,
           brand: item.data.brand,
           model: item.data.model,
           color: item.data.color,
           sex: item.data.sex,
-          // size: item.size.map(size => size.s === true),
+          size: {
+            4: item.data.size[4],
+            4.5: item.data.size[4.5],
+            5: item.data.size[5],
+            5.5: item.data.size[5.5],
+            6: item.data.size[6],
+            6.5: item.data.size[6.5],
+            7: item.data.size[7],
+            7.5: item.data.size[7.5],
+            8: item.data.size[8],
+            8.5: item.data.size[8.5],
+            9: item.data.size[9],
+            9.5: item.data.size[9.5],
+            10: item.data.size[10],
+            10.5: item.data.size[10.5],
+            11: item.data.size[11],
+            11.5: item.data.size[11.5],
+            12: item.data.size[12],
+            12.5: item.data.size[12.5],
+            13: item.data.size[13],
+            13.5: item.data.size[13.5],
+            14: item.data.size[14],
+            XS: item.data.size["XS"],
+            S: item.data.size["S"],
+            M: item.data.size["M"],
+            L: item.data.size["L"],
+            XL: item.data.size["XL"],
+            XXL: item.data.size["XXL"],
+            XXXL: item.data.size["XXXL"],
+          },
           description: item.data.description,
           qty: item.data.qty,
           buyFrom: item.data.buyFrom,
           buyPrice: item.data.buyPrice,
-          // buyDate: item.data.buyDate,
+          buyDate: item.data.buyDate,
           soldPrice: item.data.soldPrice,
-          soldDate: new Date(item.data.soldDate),
+          soldDate: item.data.soldDate,
         });
       });
   }
@@ -122,15 +151,15 @@ export default class ItemDetails extends Component {
                     <td>{this.state.description}</td>
                     <td>{this.state.buyFrom}</td>
                     <td>{this.state.buyPrice}</td>
-                    <td>{this.state.buyDate}</td>
+                    <td>{this.state.buyDate.substring(0, 10)}</td>
                     <td>{this.state.soldPrice || "-"}</td>
                     <td>
                       {this.state.soldDate !== "2000-01-01T05:00:00.000Z"
-                        ? this.state.soldDate
+                        ? this.state.soldDate.substring(0, 10)
                         : "-"}
                     </td>
                     <td>
-                      <Link className="edit" to={"/update/" + this.state._id}>
+                      <Link className="edit" to={"/update/" + this.state.id}>
                         Edit
                       </Link>
                     </td>

@@ -115,24 +115,8 @@ table tbody tr:last-child {
 
 table td,
 table th {
-    text-align: left;
-}
-
-table td.l,
-table th.l {
-    text-align: right;
-}
-
-table td.c,
-table th.c {
     text-align: center;
 }
-
-table td.r,
-table th.r {
-    text-align: center;
-}
-
 
 .table100-head th {
     font-family: OpenSans-Regular;
@@ -315,15 +299,15 @@ tbody tr:hover {
 }
 
 .edit {
-    border: 3px solid green;
-    background-color: green;
-    color: white;
+    border: 3px solid yellow;
+    background-color: yellow;
+    color: 222;
     text-decoration: none;
     border-radius: 10px;
 }
 .edit:hover {
-    border: 3px solid darkgreen;
-    background-color: darkgreen;
+    border: 3px solid darkgoldenrod;
+    background-color: darkgoldenrod;
     border-radius: 10px;
 }
 .delete {
@@ -339,15 +323,15 @@ tbody tr:hover {
     border-radius: 10px;
 }
 .sold {
-        border: 3px solid blue;
-        background-color: blue;
+        border: 3px solid green;
+        background-color: green;
         color: white;
         text-decoration: none;
         border-radius: 10px;
         font-size: 17px;
 }
 .sold:hover {
-        border: 3px solid darkblue;
-        background-color: darkblue;
+        border: 3px solid darkgreen;
+        background-color: darkgreen;
         border-radius: 10px;
 }

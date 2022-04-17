@@ -3,6 +3,7 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../form.css";
+import { parseISO, format } from "date-fns";
 
 export default class EditItem extends Component {
   constructor(props) {
@@ -70,26 +71,53 @@ export default class EditItem extends Component {
   }
 
   componentDidMount(e) {
-    // let state = this.state;
-    // state.size[e.target.value] = e.target.checked;
     axios
       .get("http://localhost:5000/items/" + this.props.match.params.id)
       .then((item) => {
-        console.log(item.data);
+        console.log(item.data.sex);
         this.setState({
           type: item.data.type,
           brand: item.data.brand,
           model: item.data.model,
           color: item.data.color,
           sex: item.data.sex,
-          // size: item.size.map(size => size.s === true),
+          size: {
+            4: item.data.size[4],
+            4.5: item.data.size[4.5],
+            5: item.data.size[5],
+            5.5: item.data.size[5.5],
+            6: item.data.size[6],
+            6.5: item.data.size[6.5],
+            7: item.data.size[7],
+            7.5: item.data.size[7.5],
+            8: item.data.size[8],
+            8.5: item.data.size[8.5],
+            9: item.data.size[9],
+            9.5: item.data.size[9.5],
+            10: item.data.size[10],
+            10.5: item.data.size[10.5],
+            11: item.data.size[11],
+            11.5: item.data.size[11.5],
+            12: item.data.size[12],
+            12.5: item.data.size[12.5],
+            13: item.data.size[13],
+            13.5: item.data.size[13.5],
+            14: item.data.size[14],
+            XS: item.data.size["XS"],
+            S: item.data.size["S"],
+            M: item.data.size["M"],
+            L: item.data.size["L"],
+            XL: item.data.size["XL"],
+            XXL: item.data.size["XXL"],
+            XXXL: item.data.size["XXXL"],
+          },
           description: item.data.description,
           qty: item.data.qty,
           buyFrom: item.data.buyFrom,
           buyPrice: item.data.buyPrice,
-          // buyDate: item.data.buyDate,
+          buyDate: parseISO(item.data.buyDate),
           soldPrice: item.data.soldPrice,
-          soldDate: new Date(item.data.soldDate),
+          soldDate: parseISO(item.data.soldDate),
         });
       });
   }
@@ -177,12 +205,28 @@ export default class EditItem extends Component {
       soldPrice: this.state.soldPrice,
       soldDate: this.state.soldDate,
     };
+    console.log(item);
     axios
       .post(
         "http://localhost:5000/items/update/" + this.props.match.params.id,
-        item
+        {
+          type: this.state.type,
+          brand: this.state.brand,
+          model: this.state.model,
+          color: this.state.color,
+          sex: this.state.sex,
+          size: this.state.size,
+          description: this.state.description,
+          qty: this.state.qty,
+          buyFrom: this.state.buyFrom,
+          buyPrice: this.state.buyPrice,
+          buyDate: this.state.buyDate,
+          soldPrice: this.state.soldPrice,
+          soldDate: this.state.soldDate,
+        }
       )
-      .then((res) => console.log(res.data));
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
 
     window.location = "/";
   }
@@ -196,13 +240,10 @@ export default class EditItem extends Component {
             <div className="divs">
               <label>Type</label>
               <select
-                required
                 value={this.state.type}
                 onChange={this.onChangeType}
+                selected={this.state.type}
               >
-                <option value="" defaultValue disabled hidden>
-                  Select Type
-                </option>
                 <option>Shoes</option>
                 <option>Shirt</option>
                 <option>Pantalon</option>
@@ -231,20 +272,21 @@ export default class EditItem extends Component {
               <div id="dSex">
                 <label id="lRadio">Sex</label>
               </div>
-              <div id="dRadio">
+              <div id="dRadio" checked={this.state.sex}>
                 <input
                   className="inputRadio"
                   type="radio"
-                  value="male"
+                  value="M"
+                  id="M"
                   name="gender"
-                  // checked={this.state.sex}
                   onChange={this.onChangeSex}
                 />
                 <label className="lRadio">Male</label>
                 <input
                   className="inputRadio"
                   type="radio"
-                  value="female"
+                  value="F"
+                  id="F"
                   name="gender"
                   onChange={this.onChangeSex}
                 />
@@ -252,7 +294,8 @@ export default class EditItem extends Component {
                 <input
                   className="inputRadio"
                   type="radio"
-                  value="unisex"
+                  value="U"
+                  id="U"
                   name="gender"
                   onChange={this.onChangeSex}
                 />
@@ -268,8 +311,8 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
                       value="4"
+                      checked={this.state.size[4]}
                       onChange={this.onChangeSize}
                     />
                     <label className="lCheckBox">4</label>
@@ -277,7 +320,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size[4.5]}
                       value="4.5"
                       onChange={this.onChangeSize}
                     />
@@ -286,7 +329,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size[5]}
                       value="5"
                       onChange={this.onChangeSize}
                     />
@@ -295,7 +338,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size[5.5]}
                       value="5.5"
                       onChange={this.onChangeSize}
                     />
@@ -304,7 +347,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size[6]}
                       value="6"
                       onChange={this.onChangeSize}
                     />
@@ -313,6 +356,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
+                      checked={this.state.size[6.5]}
                       value="6.5"
                       onChange={this.onChangeSize}
                     />
@@ -321,7 +365,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size[7]}
                       value="7"
                       onChange={this.onChangeSize}
                     />
@@ -332,7 +376,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size[7.5]}
                       value="7.5"
                       onChange={this.onChangeSize}
                     />
@@ -341,6 +385,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
+                      checked={this.state.size[8]}
                       value="8"
                       onChange={this.onChangeSize}
                     />
@@ -349,7 +394,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size[8.5]}
                       value="8.5"
                       onChange={this.onChangeSize}
                     />
@@ -358,7 +403,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size[9]}
                       value="9"
                       onChange={this.onChangeSize}
                     />
@@ -367,7 +412,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size[9.5]}
                       value="9.5"
                       onChange={this.onChangeSize}
                     />
@@ -376,7 +421,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size[10]}
                       value="10"
                       onChange={this.onChangeSize}
                     />
@@ -385,7 +430,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size[10.5]}
                       value="10.5"
                       onChange={this.onChangeSize}
                     />
@@ -396,7 +441,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size[11]}
                       value="11"
                       onChange={this.onChangeSize}
                     />
@@ -405,7 +450,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size[11.5]}
                       value="11.5"
                       onChange={this.onChangeSize}
                     />
@@ -414,7 +459,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size[12]}
                       value="12"
                       onChange={this.onChangeSize}
                     />
@@ -423,7 +468,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size[12.5]}
                       value="12.5"
                       onChange={this.onChangeSize}
                     />
@@ -432,7 +477,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size[13]}
                       value="13"
                       onChange={this.onChangeSize}
                     />
@@ -441,7 +486,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size[13.5]}
                       value="13.5"
                       onChange={this.onChangeSize}
                     />
@@ -450,7 +495,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size[14]}
                       value="14"
                       onChange={this.onChangeSize}
                     />
@@ -461,8 +506,8 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
                       value="XS"
+                      checked={this.state.size["XS"]}
                       onChange={this.onChangeSize}
                     />
                     <label className="lCheckBox">XS</label>
@@ -470,7 +515,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size["S"]}
                       value="S"
                       onChange={this.onChangeSize}
                     />
@@ -479,7 +524,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size["M"]}
                       value="M"
                       onChange={this.onChangeSize}
                     />
@@ -488,7 +533,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size["L"]}
                       value="L"
                       onChange={this.onChangeSize}
                     />
@@ -497,7 +542,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size["XL"]}
                       value="XL"
                       onChange={this.onChangeSize}
                     />
@@ -506,7 +551,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size["XLL"]}
                       value="XXL"
                       onChange={this.onChangeSize}
                     />
@@ -515,7 +560,7 @@ export default class EditItem extends Component {
                   <div className="box">
                     <input
                       type="checkbox"
-                      checked={this.state.size.value}
+                      checked={this.state.size["XXXL"]}
                       value="XXXL"
                       onChange={this.onChangeSize}
                     />

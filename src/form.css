@@ -58,6 +58,9 @@ select {
     font-size: 1.1em;
     margin-top: 10px;
 }
+input {
+    text-align: center;
+}
 
 input:focus {
     outline: 0;
@@ -73,6 +76,8 @@ select {
     font-weight: 700;
     height: 3.4em;
     line-height: 2;
+    background-color: #bf7fbf;
+    color: #f9f9f9;
 }
 
 select:first-of-type {
@@ -91,6 +96,7 @@ select:active {
     border-color: #800080;
     border-radius: 10px;
     background-color: #ffdcff;
+    color: #222;
 }
 
 select option {
