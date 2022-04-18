@@ -7,6 +7,7 @@ import CreateItem from "./Item";
 import EditItem from "./EditItem";
 import ItemsList from "./Items";
 import ItemDetails from "./ItemDetails";
+import SoldItemsList from "./ItemDetails";
 
 export default class index extends Component {
   render() {

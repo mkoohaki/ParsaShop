@@ -40,6 +40,12 @@ export default class PopUp extends Component {
     });
   }
 
+  onClose() {
+    this.setState({
+      seen: !this.state.seen,
+    });
+  }
+
   onSubmit(e) {
     e.preveDefault();
 
@@ -51,31 +57,25 @@ export default class PopUp extends Component {
 
   render() {
     return (
-      <div
-        className="modal"
-        onClose={this.handleClose}
-        {...this.state}
-        isOpen={this.state.openPopupAjout}
-      >
-        <div className="modal_content">
-          <span className="close" onClick={this.handleClick}>
-            &times;
-          </span>
-          <form onSubmit={this.onSubmit}>
-            <h3>SOld Peice</h3>
-            <label>
-              Sold price
-              <input
-                type="text"
-                required
-                value={this.state.soldPrice}
-                onChange={this.onChangePrice}
-              />
-            </label>
-            <br />
-            <input type="submit" value="Submit" />
-          </form>
-        </div>
+      <div id="dSolding">
+        <button id="modal" onClick={this.onClose}>
+          X
+        </button>
+
+        <h3>Sold Peice</h3>
+        <form onSubmit={this.onSubmit}>
+          <div id="divSize">
+            <label id="lInput">Sold price </label>
+            <input
+              type="text"
+              required
+              id="pInput"
+              value={this.state.soldPrice}
+              onChange={this.onChangePrice}
+            />
+          </div>
+          <input className="button" id="sButton" type="submit" value="Submit" />
+        </form>
       </div>
     );
   }

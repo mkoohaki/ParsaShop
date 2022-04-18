@@ -272,13 +272,14 @@ export default class EditItem extends Component {
               <div id="dSex">
                 <label id="lRadio">Sex</label>
               </div>
-              <div id="dRadio" checked={this.state.sex}>
+              <div id="dRadio">
                 <input
                   className="inputRadio"
                   type="radio"
                   value="M"
                   id="M"
                   name="gender"
+                  checked={this.state.sex === "M"}
                   onChange={this.onChangeSex}
                 />
                 <label className="lRadio">Male</label>
@@ -288,6 +289,7 @@ export default class EditItem extends Component {
                   value="F"
                   id="F"
                   name="gender"
+                  checked={this.state.sex === "F"}
                   onChange={this.onChangeSex}
                 />
                 <label className="lRadio">Female</label>
@@ -297,6 +299,7 @@ export default class EditItem extends Component {
                   value="U"
                   id="U"
                   name="gender"
+                  checked={this.state.sex === "U"}
                   onChange={this.onChangeSex}
                 />
                 <label className="lRadio">Unisex</label>
