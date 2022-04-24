@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import axios from "axios";
-import "../form.css";
+import React, { Component } from 'react';
+import axios from 'axios';
+import '../form.css';
 
 export default class User extends Component {
   constructor(props) {
@@ -12,9 +12,9 @@ export default class User extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      type: "",
-      email: "",
-      password: "",
+      type: '',
+      email: '',
+      password: '',
     };
   }
 
@@ -43,18 +43,18 @@ export default class User extends Component {
     };
 
     axios
-      .post("http://localhost:5000/users/add", item)
+      .post('http://localhost:5000/users/add', item)
       .then((res) => console.log(res.data));
 
-    window.location = "/";
+    window.location = '/';
   }
 
   render() {
     return (
-      <div id="user">
+      <div id='user'>
         <h3>Creating New User</h3>
         <form onSubmit={this.onSubmit}>
-          <div className="divs">
+          <div className='divs'>
             <label>Type</label>
             <select
               required
@@ -62,22 +62,22 @@ export default class User extends Component {
               onChange={this.onChangeType}
             >
               <option>User</option>
-              <option>Stuff</option>
+              <option>Staff</option>
             </select>
           </div>
-          <div className="divs">
+          <div className='divs'>
             <label>Email</label>
             <input
-              type="text"
+              type='text'
               required
               value={this.state.email}
               onChange={this.onChangeEmail}
             />
           </div>
-          <div className="divs">
+          <div className='divs'>
             <label>Password</label>
             <input
-              type="text"
+              type='text'
               required
               value={this.state.password}
               onChange={this.onChangePassword}
@@ -85,7 +85,7 @@ export default class User extends Component {
           </div>
 
           <div>
-            <input className="button" type="submit" value="Join Us!" />
+            <input className='button' type='submit' value='Join Us!' />
           </div>
         </form>
       </div>
