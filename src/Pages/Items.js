@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import PopUp from "./PopUp";
+import "../form.css";
 
 const Item = (props) => (
   <tr>
@@ -81,10 +82,17 @@ export default class Items extends Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.soldItem = this.soldItem.bind(this);
     this.openDetail = this.openDetail.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
       items: [],
-      seen: false,
+      id: "",
+      seenPopeup: false,
+      seenTable: true,
+      mainDivStyle: {
+        background: "blue",
+        zIndex: 0,
+      },
     };
   }
 
@@ -107,31 +115,39 @@ export default class Items extends Component {
   }
 
   soldItem(id) {
+    console.log(id);
     this.setState({
-      seen: !this.state.seen,
+      id: id,
+      seenPopeup: !this.state.seenPopeup,
+      seenTable: !this.state.seenTable,
+      mainDivStyle: {
+        ...this.state.divstyle,
+        position: "fixed",
+        padding: 0,
+        margin: 0,
+        top: 0,
+        left: 0,
+
+        width: "100%",
+        height: "100%",
+        zIndex: 1,
+        content: " ",
+        background: "rgba(0, 0, 0, 0.5)",
+      },
     });
 
-    // axios.get("http://localhost:5000/items/" + id).then((res) => {
-    //   const item = {
-    //     type: res.data.type,
-    //     brand: res.data.brand,
-    //     model: res.data.model,
-    //     color: res.data.color,
-    //     sex: res.data.sex,
-    //     size: res.data.size,
-    //     description: res.data.description,
-    //     qty: res.data.qty,
-    //     buyFrom: res.data.buyFrom,
-    //     buyPrice: res.data.buyPrice,
-    //     buyDate: res.data.buyDate,
-    //     soldPrice: 300,
-    //     soldDate: new Date(),
-    //   };
     // axios
     //   .post("http://localhost:5000/items/update/" + id, item)
     //   .then((res) => console.log(res.data));
     // });
     // window.location.reload(false);
+  }
+
+  onSubmit(id) {
+    // console.log(id);
+    // axios
+    //   .get("http://localhost:5000/items" + id)
+    //   .then((res) => console.log(res.data));
   }
 
   itemsList() {
@@ -143,6 +159,7 @@ export default class Items extends Component {
           deleteItem={this.deleteItem}
           soldItem={this.soldItem}
           openDetail={this.openDetail}
+          onSubmit={this.onSubmit}
         />
       );
     });
@@ -164,42 +181,48 @@ export default class Items extends Component {
   render() {
     return (
       <div className="limiter">
-        {this.state.seen ? (
-          <PopUp
-            updateEvents={this.updateEvents}
-            ref={this.ModalAjoutb}
-            id_user={this.state.id_user}
-            events={this.state.events}
-          />
-        ) : null}
-        {/* <PopUp toggle={this.togglePop} /> */}
-        <div className="container-table100">
-          <div className="wrap-table100">
-            <div className="table100">
-              <table>
-                <thead>
-                  <tr className="table100-head">
-                    <th className="column1">Type</th>
-                    <th className="column2">Brand</th>
-                    <th className="column3">Model</th>
-                    <th className="column4">Color</th>
-                    <th className="column5">Sex</th>
-                    <th className="column6">Size(s)</th>
-                    <th className="column7">QTY</th>
-                    <th className="column8">Description</th>
-                    <th className="column9">Buy From</th>
-                    <th className="column10">$ Buy Price</th>
-                    <th className="column11">Buy Date</th>
-                    <th className="column12">$ Sold Price</th>
-                    <th className="column13">Sold Date</th>
-                    <th className="column14">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>{this.itemsList()}</tbody>
-              </table>
+        <div id="mainDiv" style={this.state.mainDivStyle}>
+          {this.state.seenPopeup ? (
+            <PopUp
+              updateEvents={this.updateEvents}
+              ref={this.ModalAjoutb}
+              id_user={this.state.id_user}
+              events={this.state.events}
+              onSubmit={this.onSubmit}
+            />
+          ) : null}
+          {/* <PopUp toggle={this.togglePop} /> */}
+        </div>
+
+        {this.state.seenTable ? (
+          <div className="container-table100">
+            <div className="wrap-table100">
+              <div className="table100">
+                <table>
+                  <thead>
+                    <tr className="table100-head">
+                      <th className="column1">Type</th>
+                      <th className="column2">Brand</th>
+                      <th className="column3">Model</th>
+                      <th className="column4">Color</th>
+                      <th className="column5">Sex</th>
+                      <th className="column6">Size(s)</th>
+                      <th className="column7">QTY</th>
+                      <th className="column8">Description</th>
+                      <th className="column9">Buy From</th>
+                      <th className="column10">$ Buy Price</th>
+                      <th className="column11">Buy Date</th>
+                      <th className="column12">$ Sold Price</th>
+                      <th className="column13">Sold Date</th>
+                      <th className="column14">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>{this.itemsList()}</tbody>
+                </table>
+              </div>
             </div>
           </div>
-        </div>
+        ) : null}
       </div>
     );
   }

@@ -62,7 +62,7 @@ export default class PopUp extends Component {
           X
         </button>
 
-        <h3>Sold Peice</h3>
+        <h3 id="hPopup">Sold Peice</h3>
         <form onSubmit={this.onSubmit}>
           <div id="divSize">
             <label id="lInput">Sold price </label>

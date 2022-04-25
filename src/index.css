@@ -93,6 +93,7 @@ table {
 
 table * {
     position: relative;
+    z-index: 100;
 }
 
 table td,

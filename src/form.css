@@ -64,6 +64,8 @@ input {
 
 #pInput {
     width: 60%;
+    border: 2px solid salmon;
+    background-color: #ffdcff;
 }
 
 input:focus {
@@ -71,6 +73,9 @@ input:focus {
     border-color: #800080;
     border-radius: 10px;
     background-color: #ffdcff;
+}
+#pInput:focus {
+    background-color: #f9f9f9;
 }
 
 select {
@@ -238,7 +243,25 @@ input, select {
 }
 
 #dSolding {
+    display: block;
     width: 16%;
     margin-left: 42%;
     border: 2px solid #ff4aff; 
+    border-radius: 10px;
+    background-color: #ffdcff;
+    margin-top: 350px;
+}
+
+#modal {
+    margin-left: 5%;
+    margin-top: 5%;
+    background-color: #120012;
+    color: #ffdcff;
+    padding-left: 0;
+    border-radius: 5px;
+    border: 5px solid #120012;
+}
+
+#hPopup {
+    font-size: 22px;
 }
