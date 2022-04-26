@@ -62,7 +62,7 @@ input {
     text-align: center;
 }
 
-#pInput {
+.pInput {
     width: 60%;
     border: 2px solid salmon;
     background-color: #ffdcff;
@@ -74,7 +74,8 @@ input:focus {
     border-radius: 10px;
     background-color: #ffdcff;
 }
-#pInput:focus {
+
+.pInput:focus {
     background-color: #f9f9f9;
 }
 
@@ -137,10 +138,14 @@ select option {
     text-align: right;
 }
 
-#divSize {
+#divSize, #divSizeD {
     width: 96%;
     margin-left: auto;
     margin-right: auto;
+}
+
+#datepicker {
+    margin-left: 30%;
 }
 
 .dCheckBox {
@@ -209,9 +214,15 @@ label {
     text-align: right;
 }
 
-#lInput {
+#lInput, #lInputD {
     width: 30%;
 }
+
+#lInputD {
+    position: relative;
+    margin-top: 20px;
+}
+
 
 input, select {
     width: 80%;
@@ -243,7 +254,7 @@ input, select {
 }
 
 #dSolding {
-    display: block;
+    position: relative;
     width: 16%;
     margin-left: 42%;
     border: 2px solid #ff4aff; 

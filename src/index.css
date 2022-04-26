@@ -288,6 +288,7 @@ tbody tr:hover {
 }
 
 .logo {
+    background-image: '../../logggo.svg';
     position: relative;
     margin-top: 50px;
     filter: invert(96%) sepia(72%) saturate(5965%) hue-rotate(161deg) brightness(106%) contrast(106%);
@@ -296,7 +297,22 @@ tbody tr:hover {
 }
 
 .logo:hover {
-    filter: invert(100%) sepia(41%) saturate(1912%) hue-rotate(216deg) brightness(108%) contrast(100%);
+    /* filter: invert(100%) sepia(41%) saturate(1912%) hue-rotate(216deg) brightness(108%) contrast(100%); */
+/* filter: invert(82%) sepia(87%) saturate(1974%) hue-rotate(165deg) brightness(98%) contrast(104%); */
+/* filter: invert(84%) sepia(9%) saturate(1783%) hue-rotate(174deg) brightness(104%) contrast(104%); */
+/* filter: invert(71%) sepia(57%) saturate(446%) hue-rotate(168deg) brightness(103%) contrast(104%); */
+/* filter: invert(83%) sepia(28%) saturate(691%) hue-rotate(173deg) brightness(105%) contrast(102%); */
+/* filter: invert(67%) sepia(70%) saturate(318%) hue-rotate(188deg) brightness(96%) contrast(88%); */
+/* filter: invert(80%) sepia(9%) saturate(1706%) hue-rotate(189deg) brightness(100%) contrast(95%); */
+/* filter: invert(64%) sepia(81%) saturate(368%) hue-rotate(189deg) brightness(100%) contrast(96%); */
+/* filter: invert(73%) sepia(54%) saturate(388%) hue-rotate(175deg) brightness(100%) contrast(96%); */
+/* filter: invert(87%) sepia(38%) saturate(3235%) hue-rotate(175deg) brightness(114%) contrast(96%); */
+/* filter: invert(89%) sepia(58%) saturate(4053%) hue-rotate(162deg) brightness(103%) contrast(96%); */
+filter: invert(96%) sepia(29%) saturate(5900%) hue-rotate(162deg) brightness(99%) contrast(106%);
+/*93f5fa*/
+
+background-image: '../../logggo.svg';
+background-repeat: no-repeat;
 }
 
 .edit {

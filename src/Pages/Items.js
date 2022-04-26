@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import PopUp from "./PopUp";
+import DatePicker from "react-datepicker";
 import "../form.css";
+import { parseISO, format } from "date-fns";
 
 const Item = (props) => (
   <tr>
@@ -82,6 +83,10 @@ export default class Items extends Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.soldItem = this.soldItem.bind(this);
     this.openDetail = this.openDetail.bind(this);
+
+    this.onChangePrice = this.onChangePrice.bind(this);
+    this.onChangeSoldDate = this.onChangeSoldDate.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
@@ -115,7 +120,6 @@ export default class Items extends Component {
   }
 
   soldItem(id) {
-    console.log(id);
     this.setState({
       id: id,
       seenPopeup: !this.state.seenPopeup,
@@ -136,18 +140,54 @@ export default class Items extends Component {
       },
     });
 
-    // axios
-    //   .post("http://localhost:5000/items/update/" + id, item)
-    //   .then((res) => console.log(res.data));
-    // });
-    // window.location.reload(false);
-  }
+    axios.get("http://localhost:5000/items/" + id).then((item) => {
+      console.log(item.data);
 
-  onSubmit(id) {
-    // console.log(id);
-    // axios
-    //   .get("http://localhost:5000/items" + id)
-    //   .then((res) => console.log(res.data));
+      this.setState({
+        type: item.data.type,
+        brand: item.data.brand,
+        model: item.data.model,
+        color: item.data.color,
+        sex: item.data.sex,
+        size: {
+          4: item.data.size[4],
+          4.5: item.data.size[4.5],
+          5: item.data.size[5],
+          5.5: item.data.size[5.5],
+          6: item.data.size[6],
+          6.5: item.data.size[6.5],
+          7: item.data.size[7],
+          7.5: item.data.size[7.5],
+          8: item.data.size[8],
+          8.5: item.data.size[8.5],
+          9: item.data.size[9],
+          9.5: item.data.size[9.5],
+          10: item.data.size[10],
+          10.5: item.data.size[10.5],
+          11: item.data.size[11],
+          11.5: item.data.size[11.5],
+          12: item.data.size[12],
+          12.5: item.data.size[12.5],
+          13: item.data.size[13],
+          13.5: item.data.size[13.5],
+          14: item.data.size[14],
+          XS: item.data.size["XS"],
+          S: item.data.size["S"],
+          M: item.data.size["M"],
+          L: item.data.size["L"],
+          XL: item.data.size["XL"],
+          XXL: item.data.size["XXL"],
+          XXXL: item.data.size["XXXL"],
+        },
+        description: item.data.description,
+        qty: item.data.qty,
+        buyFrom: item.data.buyFrom,
+        buyPrice: item.data.buyPrice,
+        buyDate: parseISO(item.data.buyDate),
+        soldPrice: item.data.soldPrice,
+        soldDate: parseISO(item.data.soldDate),
+      });
+    });
   }
 
   itemsList() {
@@ -159,7 +199,6 @@ export default class Items extends Component {
           deleteItem={this.deleteItem}
           soldItem={this.soldItem}
           openDetail={this.openDetail}
-          onSubmit={this.onSubmit}
         />
       );
     });
@@ -178,20 +217,89 @@ export default class Items extends Component {
     );
   };
 
+  onChangeSoldDate(date) {
+    this.setState({
+      soldDate: date,
+    });
+  }
+
+  onChangePrice(e) {
+    this.setState({
+      soldPrice: e.target.value,
+    });
+  }
+
+  onClose() {
+    window.location = "/";
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+
+    const item = {
+      type: this.state.type,
+      brand: this.state.brand,
+      model: this.state.model,
+      color: this.state.color,
+      sex: this.state.sex,
+      size: this.state.size,
+      description: this.state.description,
+      qty: this.state.qty,
+      buyFrom: this.state.buyFrom,
+      buyPrice: this.state.buyPrice,
+      buyDate: this.state.buyDate,
+      soldPrice: this.state.soldPrice,
+      soldDate: this.state.soldDate,
+    };
+    console.log(item);
+
+    axios
+      .post("http://localhost:5000/items/update/" + this.state.id, item)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+
+    window.location = "/";
+  }
+
   render() {
     return (
       <div className="limiter">
         <div id="mainDiv" style={this.state.mainDivStyle}>
           {this.state.seenPopeup ? (
-            <PopUp
-              updateEvents={this.updateEvents}
-              ref={this.ModalAjoutb}
-              id_user={this.state.id_user}
-              events={this.state.events}
-              onSubmit={this.onSubmit}
-            />
+            <div id="dSolding">
+              <button id="modal" onClick={this.onClose}>
+                X
+              </button>
+              <h3 id="hPopup">Sold Peice</h3>
+              <form onSubmit={this.onSubmit}>
+                <div id="divSize">
+                  <label id="lInput">Sold price </label>
+                  <input
+                    type="text"
+                    required
+                    className="pInput"
+                    value={this.state.soldPrice}
+                    onChange={this.onChangePrice}
+                  />
+                </div>
+                <div id="divSizeD">
+                  <label id="lInputD">Sold Date </label>
+                  <DatePicker
+                    className="pInput"
+                    id="datepicker"
+                    selected={this.state.soldDate}
+                    onChange={this.onChangeSoldDate}
+                  />
+                </div>
+                <input
+                  className="button"
+                  id="sButton"
+                  type="submit"
+                  value="Submit"
+                />
+              </form>
+            </div>
           ) : null}
-          {/* <PopUp toggle={this.togglePop} /> */}
         </div>
 
         {this.state.seenTable ? (

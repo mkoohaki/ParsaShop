@@ -74,7 +74,6 @@ export default class EditItem extends Component {
     axios
       .get("http://localhost:5000/items/" + this.props.match.params.id)
       .then((item) => {
-        console.log(item.data.sex);
         this.setState({
           type: item.data.type,
           brand: item.data.brand,
@@ -209,21 +208,7 @@ export default class EditItem extends Component {
     axios
       .post(
         "http://localhost:5000/items/update/" + this.props.match.params.id,
-        {
-          type: this.state.type,
-          brand: this.state.brand,
-          model: this.state.model,
-          color: this.state.color,
-          sex: this.state.sex,
-          size: this.state.size,
-          description: this.state.description,
-          qty: this.state.qty,
-          buyFrom: this.state.buyFrom,
-          buyPrice: this.state.buyPrice,
-          buyDate: this.state.buyDate,
-          soldPrice: this.state.soldPrice,
-          soldDate: this.state.soldDate,
-        }
+        item
       )
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err));
