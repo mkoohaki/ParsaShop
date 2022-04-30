@@ -89,9 +89,12 @@ export default class Items extends Component {
     this.onClose = this.onClose.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
+    this.onChangeStatus = this.onChangeStatus.bind(this);
+
     this.state = {
       items: [],
       id: "",
+      status: "",
       seenPopeup: false,
       seenTable: true,
       mainDivStyle: {
@@ -199,8 +202,31 @@ export default class Items extends Component {
           deleteItem={this.deleteItem}
           soldItem={this.soldItem}
           openDetail={this.openDetail}
+          onChangeStatus={this.onChangeStatus}
         />
       );
+    });
+  }
+
+  onChangeStatus(e) {
+    this.setState({
+      status: e.target.value,
+    });
+    console.log(this.state.status);
+    axios.get("http://localhost:5000/items").then((res) => {
+      if (this.state.status === "sold") {
+        this.setState({
+          items: res.data.filter((el) => el.soldPrice !== 0),
+        });
+      } else if (this.state.status === "available") {
+        this.setState({
+          items: res.data.filter((el) => el.soldPrice === 0),
+        });
+      } else {
+        this.setState({
+          items: res.data,
+        });
+      }
     });
   }
 
@@ -306,6 +332,70 @@ export default class Items extends Component {
           <div className="container-table100">
             <div className="wrap-table100">
               <div className="table100">
+                <div id="filters">
+                  <div className="divsFilter">
+                    <div id="dFilter">
+                      <label id="lRadioFilter">Status</label>
+                    </div>
+                    <div className="dRadioFilter">
+                      <label className="lRadioFilter">Sold</label>
+                      <input
+                        className="inputRadio"
+                        type="radio"
+                        value="sold"
+                        name="status"
+                        onChange={this.onChangeStatus}
+                      />
+                      <label className="lRadioFilter">Available</label>
+                      <input
+                        className="inputRadio"
+                        type="radio"
+                        value="available"
+                        name="status"
+                        onChange={this.onChangeStatus}
+                      />
+                      <label className="lRadioFilter">All</label>
+                      <input
+                        className="inputRadio"
+                        type="radio"
+                        value="all"
+                        name="status"
+                        onChange={this.onChangeStatus}
+                      />
+                    </div>
+                  </div>
+                  <div className="divsFilter">
+                    <div id="dFilter">
+                      <label id="lRadioFilter">Date</label>
+                    </div>
+                    <div className="dRadioFilter">
+                      <div className="dateDiv">
+                        <div className="dateDiv1">
+                          <label className="labelDate">Start </label>
+                        </div>
+                        <div className="dateDiv1">
+                          <DatePicker
+                            className="dateFilter"
+                            selected={this.state.buyDate}
+                            onChange={this.onChangeBuyDate}
+                          />
+                        </div>
+                      </div>
+                      <div className="dateDiv">
+                        <div className="dateDiv2">
+                          <label className="labelDate">End </label>
+                        </div>
+                        <div className="dateDiv2">
+                          <DatePicker
+                            className="dateFilter"
+                            selected={this.state.buyDate}
+                            onChange={this.onChangeBuyDate}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <table>
                   <thead>
                     <tr className="table100-head">
