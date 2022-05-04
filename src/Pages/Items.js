@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "../form.css";
 import { parseISO, format } from "date-fns";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Item = (props) => (
   <tr>
@@ -90,11 +91,15 @@ export default class Items extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.onChangeStatus = this.onChangeStatus.bind(this);
+    this.onChangeBuyFromDate = this.onChangeBuyFromDate.bind(this);
+    this.onChangeBuyToDate = this.onChangeBuyToDate.bind(this);
 
     this.state = {
       items: [],
       id: "",
       status: "",
+      buyFromDate: 0,
+      buyToDate: 0,
       seenPopeup: false,
       seenTable: true,
       mainDivStyle: {
@@ -212,7 +217,6 @@ export default class Items extends Component {
     this.setState({
       status: e.target.value,
     });
-    console.log(this.state.status);
     axios.get("http://localhost:5000/items").then((res) => {
       if (this.state.status === "sold") {
         this.setState({
@@ -227,6 +231,35 @@ export default class Items extends Component {
           items: res.data,
         });
       }
+    });
+  }
+
+  onChangeBuyFromDate(date) {
+    console.log(date);
+    this.setState({
+      buyFromDate: date,
+    });
+    console.log(new Date(this.state.buyFromDate).toISOString());
+    axios.get("http://localhost:5000/items").then((res) => {
+      console.log(res.data);
+      this.setState({
+        items: res.data.filter((el) => el.buyDate >= this.state.buyFromDate),
+      });
+    });
+  }
+
+  onChangeBuyToDate(date) {
+    console.log(date);
+
+    this.setState({
+      buyToDate: date,
+    });
+    console.log(this.state.buyFromDate);
+
+    axios.get("http://localhost:5000/items").then((res) => {
+      this.setState({
+        items: res.data.filter((el) => el.buyDate <= this.state.buyToDate),
+      });
     });
   }
 
@@ -368,28 +401,28 @@ export default class Items extends Component {
                     <div id="dFilter">
                       <label id="lRadioFilter">Date</label>
                     </div>
-                    <div className="dRadioFilter">
+                    <div id="dDatePicker">
                       <div className="dateDiv">
                         <div className="dateDiv1">
-                          <label className="labelDate">Start </label>
+                          <label className="labelDate">From </label>
                         </div>
                         <div className="dateDiv1">
                           <DatePicker
                             className="dateFilter"
-                            selected={this.state.buyDate}
-                            onChange={this.onChangeBuyDate}
+                            selected={this.state.buyFromDate}
+                            onChange={this.onChangeBuyFromDate}
                           />
                         </div>
                       </div>
                       <div className="dateDiv">
                         <div className="dateDiv2">
-                          <label className="labelDate">End </label>
+                          <label className="labelDate">To </label>
                         </div>
                         <div className="dateDiv2">
                           <DatePicker
                             className="dateFilter"
-                            selected={this.state.buyDate}
-                            onChange={this.onChangeBuyDate}
+                            selected={this.state.buyToDate}
+                            onChange={this.onChangeBuyToDate}
                           />
                         </div>
                       </div>
