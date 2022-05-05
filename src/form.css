@@ -363,3 +363,7 @@ input, select {
 #hPopup {
     font-size: 22px;
 }
+
+#result {
+    margin-top: 50px;
+}

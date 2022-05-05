@@ -104,6 +104,8 @@ export default class Items extends Component {
       buyToDate: 0,
       soldFromDate: 0,
       soldToDate: 0,
+      totalBuy: 0,
+      totalSold: 0,
       seenPopeup: false,
       seenTable: true,
       mainDivStyle: {
@@ -114,9 +116,20 @@ export default class Items extends Component {
   }
 
   componentDidMount() {
+    var totalBuyPrice = 0;
+    var totalSoldPrice = 0;
+
     axios.get("http://localhost:5000/items").then((res) => {
+      console.log(res.data);
+      for (var i = 0; i < res.data.length; i++) {
+        totalBuyPrice += res.data[i].buyPrice;
+        totalSoldPrice += res.data[i].soldPrice;
+      }
+
       this.setState({
         items: res.data,
+        totalBuy: totalBuyPrice,
+        totalSold: totalSoldPrice,
       });
     });
   }
@@ -153,8 +166,6 @@ export default class Items extends Component {
     });
 
     axios.get("http://localhost:5000/items/" + id).then((item) => {
-      console.log(item.data);
-
       this.setState({
         type: item.data.type,
         brand: item.data.brand,
@@ -512,6 +523,16 @@ export default class Items extends Component {
                   </thead>
                   <tbody>{this.itemsList()}</tbody>
                 </table>
+                <div id="result">
+                  <div className="resultD">
+                    <p className="resultL">Total Purchase</p>
+                    <h4 className="resultH">{this.state.totalBuy}</h4>
+                  </div>
+                  <div className="resultD" id="resultD2">
+                    <p className="resultL">Total Sale</p>
+                    <h4 className="resultH">{this.state.totalSold}</h4>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

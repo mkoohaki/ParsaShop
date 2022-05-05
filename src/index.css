@@ -90,6 +90,27 @@ table {
     margin: 0 auto;
     position: relative;
 }
+#result {
+    width: 40%;
+    margin-left: 30%;
+    border:3px solid #f2e5f2;
+    text-align: center;
+    border-radius: 20px;
+}
+
+.resultD {
+    width: 20%;
+    display: inline-block;
+}
+.resultL, .resultH{
+    float: left;
+    margin-left: 5%;
+    font-size: 20px;
+}
+
+#resultD2 {
+    margin-left: 20%;
+}
 
 table * {
     position: relative;
@@ -107,6 +128,10 @@ table thead tr {
 }
 
 table tbody tr {
+    height: 50px;
+}
+
+#resultTable td {
     height: 50px;
 }
 
