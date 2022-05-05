@@ -123,20 +123,35 @@ select option {
     margin-left: 70%;
 }
 
+#dateDivSoldFilter {
+    margin-top: 22px;
+}
+
 .dateDiv {
     float: left;
-    width: 50%;
+    width: 49%;
+    border:3px solid white;
+    border-radius: 10px;
+    height: 52px;
 }
 
 .dateDiv1, .dateDiv2 {
     float: left;
     width: 50%;
 }
+#dateDivBuy, #dateDivSold {
+    margin-left: 2%;
+}
 
-.labelDate {
+.labelDate, .labelDateTo {
     width: 30%;
     padding-left: 30px;
     margin-top: 12px;
+    color: #ffdcff;
+}
+
+.labelDateTo {
+    padding-left: 45px;
 }
 
 .dateFilter {
@@ -237,9 +252,9 @@ select option {
 }
 
 #dDatePicker {
-    padding-left: 2%;
+    padding-left: 0;
     padding-top: 0;
-    height: 52px;
+    border: none;
 }
 
 
@@ -248,11 +263,15 @@ select option {
     margin-right: 16%;
 }
 
-#lRadioFilter {
+#lRadioFilter, .lDateFilter {
     width: 10%;
     margin-right: 20%;
-    margin-top: 5px;
+    margin-top: 3px;
     color:#ffdcff;
+}
+
+.lDateFilter {
+    margin-top: 0;
 }
 
 .lRadioFilter {

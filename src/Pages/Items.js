@@ -93,6 +93,8 @@ export default class Items extends Component {
     this.onChangeStatus = this.onChangeStatus.bind(this);
     this.onChangeBuyFromDate = this.onChangeBuyFromDate.bind(this);
     this.onChangeBuyToDate = this.onChangeBuyToDate.bind(this);
+    this.onChangeSoldFromDate = this.onChangeSoldFromDate.bind(this);
+    this.onChangeSoldToDate = this.onChangeSoldToDate.bind(this);
 
     this.state = {
       items: [],
@@ -100,6 +102,8 @@ export default class Items extends Component {
       status: "",
       buyFromDate: 0,
       buyToDate: 0,
+      soldFromDate: 0,
+      soldToDate: 0,
       seenPopeup: false,
       seenTable: true,
       mainDivStyle: {
@@ -235,30 +239,57 @@ export default class Items extends Component {
   }
 
   onChangeBuyFromDate(date) {
-    console.log(date);
     this.setState({
       buyFromDate: date,
+      buyToDate: 0,
+      soldFromDate: 0,
+      soldToDate: 0,
     });
-    console.log(new Date(this.state.buyFromDate).toISOString());
     axios.get("http://localhost:5000/items").then((res) => {
-      console.log(res.data);
       this.setState({
-        items: res.data.filter((el) => el.buyDate >= this.state.buyFromDate),
+        items: res.data.filter((el) => el.buyDate >= date.toISOString()),
       });
     });
   }
 
   onChangeBuyToDate(date) {
-    console.log(date);
-
     this.setState({
       buyToDate: date,
+      buyFromDate: 0,
+      soldFromDate: 0,
+      soldToDate: 0,
     });
-    console.log(this.state.buyFromDate);
-
     axios.get("http://localhost:5000/items").then((res) => {
       this.setState({
-        items: res.data.filter((el) => el.buyDate <= this.state.buyToDate),
+        items: res.data.filter((el) => el.buyDate <= date.toISOString()),
+      });
+    });
+  }
+
+  onChangeSoldFromDate(date) {
+    this.setState({
+      soldFromDate: date,
+      soldToDate: 0,
+      buyFromDate: 0,
+      buyToDate: 0,
+    });
+    axios.get("http://localhost:5000/items").then((res) => {
+      this.setState({
+        items: res.data.filter((el) => el.soldDate >= date.toISOString()),
+      });
+    });
+  }
+
+  onChangeSoldToDate(date) {
+    this.setState({
+      soldToDate: date,
+      buyFromDate: 0,
+      buyToDate: 0,
+      soldFromDate: 0,
+    });
+    axios.get("http://localhost:5000/items").then((res) => {
+      this.setState({
+        items: res.data.filter((el) => el.soldDate <= date.toISOString()),
       });
     });
   }
@@ -399,7 +430,7 @@ export default class Items extends Component {
                   </div>
                   <div className="divsFilter">
                     <div id="dFilter">
-                      <label id="lRadioFilter">Date</label>
+                      <label className="lDateFilter">Buy Date</label>
                     </div>
                     <div id="dDatePicker">
                       <div className="dateDiv">
@@ -414,15 +445,46 @@ export default class Items extends Component {
                           />
                         </div>
                       </div>
-                      <div className="dateDiv">
+                      <div className="dateDiv" id="dateDivBuy">
                         <div className="dateDiv2">
-                          <label className="labelDate">To </label>
+                          <label className="labelDateTo">To </label>
                         </div>
                         <div className="dateDiv2">
                           <DatePicker
                             className="dateFilter"
                             selected={this.state.buyToDate}
                             onChange={this.onChangeBuyToDate}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="divsFilter" id="dateDivSoldFilter">
+                    <div id="dFilter">
+                      <label className="lDateFilter">Sold Date</label>
+                    </div>
+                    <div id="dDatePicker">
+                      <div className="dateDiv">
+                        <div className="dateDiv1">
+                          <label className="labelDate">From </label>
+                        </div>
+                        <div className="dateDiv1">
+                          <DatePicker
+                            className="dateFilter"
+                            selected={this.state.soldFromDate}
+                            onChange={this.onChangeSoldFromDate}
+                          />
+                        </div>
+                      </div>
+                      <div className="dateDiv" id="dateDivSold">
+                        <div className="dateDiv2">
+                          <label className="labelDateTo">To </label>
+                        </div>
+                        <div className="dateDiv2">
+                          <DatePicker
+                            className="dateFilter"
+                            selected={this.state.soldToDate}
+                            onChange={this.onChangeSoldToDate}
                           />
                         </div>
                       </div>
