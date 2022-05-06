@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import '../form.css';
+import './register.css';
 
-export default class User extends Component {
+export default class Register extends Component {
   constructor(props) {
     super(props);
 
@@ -52,7 +53,7 @@ export default class User extends Component {
   render() {
     return (
       <div id='user'>
-        <h3>Creating New User</h3>
+        <h3>Register</h3>
         <form onSubmit={this.onSubmit}>
           <div className='divs'>
             <label>Type</label>
@@ -83,10 +84,12 @@ export default class User extends Component {
               onChange={this.onChangePassword}
             />
           </div>
-
           <div>
             <input className='button' type='submit' value='Join Us!' />
           </div>
+          <p>
+            Already have an account? <Link to='/login'>Login</Link>
+          </p>
         </form>
       </div>
     );
