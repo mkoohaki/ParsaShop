@@ -525,12 +525,14 @@ export default class Items extends Component {
                 </table>
                 <div id="result">
                   <div className="resultD">
+                    <h4 className="resultH">${this.state.totalBuy}</h4>
                     <p className="resultL">Total Purchase</p>
-                    <h4 className="resultH">{this.state.totalBuy}</h4>
                   </div>
-                  <div className="resultD" id="resultD2">
-                    <p className="resultL">Total Sale</p>
-                    <h4 className="resultH">{this.state.totalSold}</h4>
+                  <div className="resultD">
+                    <h4 className="resultH">${this.state.totalSold}</h4>
+                    <p className="resultL" id="resultL2">
+                      Total Sale
+                    </p>
                   </div>
                 </div>
               </div>

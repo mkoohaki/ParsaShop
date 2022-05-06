@@ -544,7 +544,7 @@ export default class Item extends Component {
               />
             </div>
             <div className="divs">
-              <label className="labelDate">Buy Date </label>
+              <label>Buy Date </label>
               <DatePicker
                 className="date"
                 selected={this.state.buyDate}

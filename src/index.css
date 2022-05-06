@@ -91,21 +91,30 @@ table {
     position: relative;
 }
 #result {
-    width: 40%;
-    margin-left: 30%;
-    border:3px solid #f2e5f2;
+    width: 80%;
+    margin-left: 10%;
     text-align: center;
-    border-radius: 20px;
 }
 
 .resultD {
-    width: 20%;
+    width: 30%;
     display: inline-block;
 }
 .resultL, .resultH{
-    float: left;
     margin-left: 5%;
     font-size: 20px;
+    text-align: center;
+}
+
+.resultL {
+    font-weight: 700;
+}
+
+.resultH {
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    border-bottom:3px solid #f2e5f2;
+    box-shadow: 0 12px 10px -10px #f2e5f2;
 }
 
 #resultD2 {
