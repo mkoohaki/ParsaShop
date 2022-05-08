@@ -1,73 +1,90 @@
-const express = require("express");
-const crypto = require("crypto");
-
-const User = require("../models/user.model");
-
+const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('config');
+const { check, validationResult } = require('express-validator');
 
-let SALT_LENGTH = 16;
+const User = require('../models/user.model');
 
-router.route("/").get((req, res) => {
-  User.find()
-    .then((users) => res.json(users))
-    .catch((err) => res.status(400).json("Error: " + err));
-});
-
-router.route("/:id").delete((req, res) => {
-  User.findByIdAndDelete(req.params.id)
-    .then(() => res.json("User deleted!"))
-    .catch((err) => res.status(400).json("Error: " + err));
-});
-
-router.route("/add").post(async (req, res) => {
-  const type = req.body.type;
-  const email = req.body.email;
-  const password = req.body.password;
-
-  if (validateEmail(email)) {
-    if (validatePassword(password)) {
-      let salt = crypto
-        .randomBytes(Math.ceil(SALT_LENGTH / 2))
-        .toString("hex")
-        .slice(0, SALT_LENGTH);
-      let hashedPassword = hasher(password, salt);
-
-      const newUser = new User({ type, email, salt, hashedPassword });
-
-      newUser
-        .save()
-        .then(() => res.json("User added!"))
-        .catch((err) => res.status(400).json("Error: " + err));
+// @route   POST api/users
+// @desc    Return all users
+// @access  public
+router.get('/', async (req, res) => {
+  try {
+    const users = await User.find().select('-hashedPassword -salt');
+    if (users.length > 0) {
+      res.json(users);
     } else {
-      res.status(400).json("Not valid password");
+      res.json({ msg: 'No users found' });
     }
-  } else {
-    res.status(400).json("Not valid email");
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
   }
 });
 
-function hasher(password, salt) {
-  let hash = crypto.createHmac("sha512", salt);
-  hash.update(password);
-  let value = hash.digest("hex");
-  return value;
-}
+// @route   POST api/users
+// @desc    Register user
+// @access  public
+router.post(
+  '/',
+  [
+    check('name', 'Name is required').not().isEmpty(),
+    check('email', 'Please provide a valid email').isEmail(),
+    check('password', 'Password must be longer than 6 characters').isLength({
+      min: 6,
+    }),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-const validateEmail = (email) => {
-  return String(email)
-    .toLowerCase()
-    .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    );
-};
+    const { type, name, email, password } = req.body;
 
-const validatePassword = (password) => {
-  var decimal =
-    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+    try {
+      let user = await User.findOne({ email });
 
-  if (password.match(decimal)) {
-    return password;
+      if (user) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: 'User already exits' }] });
+      }
+
+      user = new User({
+        type,
+        name,
+        email,
+        password,
+      });
+
+      const salt = await bcrypt.genSalt(10);
+
+      user.password = await bcrypt.hash(password, salt);
+
+      await user.save();
+
+      const payload = {
+        user: {
+          id: user.id,
+        },
+      };
+      jwt.sign(
+        payload,
+        config.get('jwtSecret'),
+        { expiresIn: 3600 },
+        (err, token) => {
+          if (err) throw err;
+          res.json({ token });
+        }
+      );
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
   }
-};
+);
 
 module.exports = router;
