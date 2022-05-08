@@ -120,7 +120,6 @@ export default class Items extends Component {
     var totalSoldPrice = 0;
 
     axios.get("http://localhost:5000/items").then((res) => {
-      console.log(res.data);
       for (var i = 0; i < res.data.length; i++) {
         totalBuyPrice += res.data[i].buyPrice;
         totalSoldPrice += res.data[i].soldPrice;
@@ -229,27 +228,56 @@ export default class Items extends Component {
   }
 
   onChangeStatus(e) {
+    var totalBuyPrice = 0;
+    var totalSoldPrice = 0;
+
     this.setState({
       status: e.target.value,
     });
     axios.get("http://localhost:5000/items").then((res) => {
       if (this.state.status === "sold") {
+        var elements = res.data.filter((el) => el.soldPrice !== 0);
+        for (var i = 0; i < elements.length; i++) {
+          totalBuyPrice += elements[i].buyPrice;
+          totalSoldPrice += elements[i].soldPrice;
+        }
+
         this.setState({
-          items: res.data.filter((el) => el.soldPrice !== 0),
+          items: elements,
+          totalBuy: totalBuyPrice,
+          totalSold: totalSoldPrice,
         });
       } else if (this.state.status === "available") {
+        var elements = res.data.filter((el) => el.soldPrice === 0);
+        for (var i = 0; i < elements.length; i++) {
+          totalBuyPrice += elements[i].buyPrice;
+          totalSoldPrice += elements[i].soldPrice;
+        }
+
         this.setState({
-          items: res.data.filter((el) => el.soldPrice === 0),
+          items: elements,
+          totalBuy: totalBuyPrice,
+          totalSold: totalSoldPrice,
         });
       } else {
+        var elements = res.data;
+        for (var i = 0; i < elements.length; i++) {
+          totalBuyPrice += res.data[i].buyPrice;
+          totalSoldPrice += res.data[i].soldPrice;
+        }
         this.setState({
-          items: res.data,
+          items: elements,
+          totalBuy: totalBuyPrice,
+          totalSold: totalSoldPrice,
         });
       }
     });
   }
 
   onChangeBuyFromDate(date) {
+    var totalBuyPrice = 0;
+    var totalSoldPrice = 0;
+
     this.setState({
       buyFromDate: date,
       buyToDate: 0,
@@ -257,13 +285,22 @@ export default class Items extends Component {
       soldToDate: 0,
     });
     axios.get("http://localhost:5000/items").then((res) => {
+      var elements = res.data.filter((el) => el.buyDate >= date.toISOString());
+      for (var i = 0; i < elements.length; i++) {
+        totalBuyPrice += elements[i].buyPrice;
+        totalSoldPrice += elements[i].soldPrice;
+      }
       this.setState({
-        items: res.data.filter((el) => el.buyDate >= date.toISOString()),
+        items: elements,
+        totalBuy: totalBuyPrice,
+        totalSold: totalSoldPrice,
       });
     });
   }
 
   onChangeBuyToDate(date) {
+    var totalBuyPrice = 0;
+    var totalSoldPrice = 0;
     this.setState({
       buyToDate: date,
       buyFromDate: 0,
@@ -271,13 +308,22 @@ export default class Items extends Component {
       soldToDate: 0,
     });
     axios.get("http://localhost:5000/items").then((res) => {
+      var elements = res.data.filter((el) => el.buyDate <= date.toISOString());
+      for (var i = 0; i < elements.length; i++) {
+        totalBuyPrice += elements[i].buyPrice;
+        totalSoldPrice += elements[i].soldPrice;
+      }
       this.setState({
-        items: res.data.filter((el) => el.buyDate <= date.toISOString()),
+        items: elements,
+        totalBuy: totalBuyPrice,
+        totalSold: totalSoldPrice,
       });
     });
   }
 
   onChangeSoldFromDate(date) {
+    var totalBuyPrice = 0;
+    var totalSoldPrice = 0;
     this.setState({
       soldFromDate: date,
       soldToDate: 0,
@@ -285,13 +331,22 @@ export default class Items extends Component {
       buyToDate: 0,
     });
     axios.get("http://localhost:5000/items").then((res) => {
+      var elements = res.data.filter((el) => el.soldDate >= date.toISOString());
+      for (var i = 0; i < elements.length; i++) {
+        totalBuyPrice += elements[i].buyPrice;
+        totalSoldPrice += elements[i].soldPrice;
+      }
       this.setState({
-        items: res.data.filter((el) => el.soldDate >= date.toISOString()),
+        items: elements,
+        totalBuy: totalBuyPrice,
+        totalSold: totalSoldPrice,
       });
     });
   }
 
   onChangeSoldToDate(date) {
+    var totalBuyPrice = 0;
+    var totalSoldPrice = 0;
     this.setState({
       soldToDate: date,
       buyFromDate: 0,
@@ -299,8 +354,15 @@ export default class Items extends Component {
       soldFromDate: 0,
     });
     axios.get("http://localhost:5000/items").then((res) => {
+      var elements = res.data.filter((el) => el.soldDate <= date.toISOString());
+      for (var i = 0; i < elements.length; i++) {
+        totalBuyPrice += elements[i].buyPrice;
+        totalSoldPrice += elements[i].soldPrice;
+      }
       this.setState({
-        items: res.data.filter((el) => el.soldDate <= date.toISOString()),
+        items: elements,
+        totalBuy: totalBuyPrice,
+        totalSold: totalSoldPrice,
       });
     });
   }
