@@ -54,7 +54,7 @@ router.post(
       }
 
       user = new User({
-        type,
+        type: type.toLowerCase(),
         name,
         email,
         password,

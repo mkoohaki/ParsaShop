@@ -1,97 +1,85 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { register } from '../../../actions/auth';
 import './register.css';
 
-export default class Register extends Component {
-  constructor(props) {
-    super(props);
+export const Register = () => {
+  const history = useHistory();
+  const [formData, setFormData] = useState({
+    type: 'user',
+    name: '',
+    email: '',
+    password: '',
+  });
 
-    this.onChangeType = this.onChangeType.bind(this);
-    this.onChangeEmail = this.onChangeEmail.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+  const { type, name, email, password } = formData;
 
-    this.state = {
-      type: '',
-      email: '',
-      password: '',
-    };
-  }
+  const onChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-  onChangeType(e) {
-    this.setState({
-      type: e.target.value,
-    });
-  }
-  onChangeEmail(e) {
-    this.setState({
-      email: e.target.value,
-    });
-  }
-  onChangePassword(e) {
-    this.setState({
-      password: e.target.value,
-    });
-  }
-  onSubmit(e) {
+  const onSubmit = (e) => {
     e.preventDefault();
+    register(formData);
+    history.push('/');
+  };
 
-    const item = {
-      type: this.state.type,
-      email: this.state.email,
-      password: this.state.password,
-    };
-
-    axios
-      .post('http://localhost:5000/users/add', item)
-      .then((res) => console.log(res.data));
-
-    window.location = '/';
-  }
-
-  render() {
-    return (
-      <div id='user'>
-        <h3>Register</h3>
-        <form onSubmit={this.onSubmit}>
-          <div className='divs'>
-            <label>Type</label>
-            <select
-              required
-              value={this.state.type}
-              onChange={this.onChangeType}
-            >
-              <option>User</option>
-              <option>Staff</option>
-            </select>
-          </div>
-          <div className='divs'>
-            <label>Email</label>
-            <input
-              type='text'
-              required
-              value={this.state.email}
-              onChange={this.onChangeEmail}
-            />
-          </div>
-          <div className='divs'>
-            <label>Password</label>
-            <input
-              type='text'
-              required
-              value={this.state.password}
-              onChange={this.onChangePassword}
-            />
-          </div>
-          <div>
-            <input className='button' type='submit' value='Join Us!' />
-          </div>
-          <p>
-            Already have an account? <Link to='/login'>Login</Link>
-          </p>
-        </form>
-      </div>
-    );
-  }
-}
+  return (
+    <div id='user'>
+      <h3>Register</h3>
+      <form onSubmit={(e) => onSubmit(e)}>
+        <div className='divs'>
+          <label>Type:</label>
+          <select
+            name='type'
+            value={type}
+            onChange={(e) => onChange(e)}
+            required
+          >
+            <option>User</option>
+            <option>Staff</option>
+          </select>
+        </div>
+        <div className='divs'>
+          <label>Name:</label>
+          <input
+            type='text'
+            name='name'
+            value={name}
+            onChange={(e) => onChange(e)}
+            required
+          />
+        </div>
+        <div className='divs'>
+          <label>Email:</label>
+          <input
+            type='text'
+            name='email'
+            value={email}
+            onChange={(e) => onChange(e)}
+            required
+          />
+        </div>
+        <div className='divs'>
+          <label>Password:</label>
+          <input
+            type='password'
+            name='password'
+            value={password}
+            onChange={(e) => onChange(e)}
+            required
+          />
+        </div>
+        <div>
+          <input className='button' type='submit' value='Join Us!' />
+        </div>
+        <p>
+          Already have an account? <Link to='/login'>Login</Link>
+        </p>
+      </form>
+    </div>
+  );
+};
