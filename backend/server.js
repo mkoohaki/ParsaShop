@@ -12,10 +12,8 @@ app.use(express.json({ extended: false }));
 
 app.get('/', (req, res) => res.send('API running'));
 
-const userRouter = require('./routes/users');
-const itemRouter = require('./routes/items');
-
-app.use('/users', userRouter);
-app.use('/items', itemRouter);
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/users', require('./routes/users'));
+app.use('/items', require('./routes/items'));
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
