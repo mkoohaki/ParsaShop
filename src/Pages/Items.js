@@ -95,25 +95,18 @@ export default class Items extends Component {
     this.onChangeBuyToDate = this.onChangeBuyToDate.bind(this);
     this.onChangeSoldFromDate = this.onChangeSoldFromDate.bind(this);
     this.onChangeSoldToDate = this.onChangeSoldToDate.bind(this);
-
-    this.onChangeBuyFromDatePeriod = this.onChangeBuyFromDatePeriod.bind(this);
-    this.onChangeBuyToDatePeriod = this.onChangeBuyToDatePeriod.bind(this);
-    this.onChangeSoldFromDatePeriod =
-      this.onChangeSoldFromDatePeriod.bind(this);
-    this.onChangeSoldToDatePeriod = this.onChangeSoldToDatePeriod.bind(this);
+    this.refreshFilter = this.refreshFilter.bind(this);
 
     this.state = {
       items: [],
       id: "",
-      status: "",
+      sold: false,
+      available: false,
+      all: false,
       buyFromDate: 0,
       buyToDate: 0,
       soldFromDate: 0,
       soldToDate: 0,
-      buyFromDatePeriod: 0,
-      buyToDatePeriod: 0,
-      soldFromDatePeriod: 0,
-      soldToDatePeriod: 0,
       totalBuy: 0,
       totalSold: 0,
       seenPopeup: false,
@@ -237,287 +230,136 @@ export default class Items extends Component {
     });
   }
 
-  onChangeStatus(e) {
+  refreshFilter(e) {
     var totalBuyPrice = 0;
     var totalSoldPrice = 0;
-
+    const yesBtn = document.getElementsByClassName("inputRadio");
+    yesBtn.checked = false;
     this.setState({
-      status: e.target.value,
+      buyFromDate: 0,
+      buyToDate: 0,
+      soldFromDate: 0,
+      soldToDate: 0,
+      sold: false,
+      available: false,
+      all: false,
     });
+
     axios.get("http://localhost:5000/items").then((res) => {
-      if (this.state.status === "sold") {
-        var elements = res.data.filter((el) => el.soldPrice !== 0);
-        for (var i = 0; i < elements.length; i++) {
-          totalBuyPrice += elements[i].buyPrice;
-          totalSoldPrice += elements[i].soldPrice;
-        }
-
-        this.setState({
-          items: elements,
-          totalBuy: totalBuyPrice,
-          totalSold: totalSoldPrice,
-        });
-      } else if (this.state.status === "available") {
-        var elements = res.data.filter((el) => el.soldPrice === 0);
-        for (var i = 0; i < elements.length; i++) {
-          totalBuyPrice += elements[i].buyPrice;
-          totalSoldPrice += elements[i].soldPrice;
-        }
-
-        this.setState({
-          items: elements,
-          totalBuy: totalBuyPrice,
-          totalSold: totalSoldPrice,
-        });
-      } else {
-        var elements = res.data;
-        for (var i = 0; i < elements.length; i++) {
-          totalBuyPrice += res.data[i].buyPrice;
-          totalSoldPrice += res.data[i].soldPrice;
-        }
-        this.setState({
-          items: elements,
-          totalBuy: totalBuyPrice,
-          totalSold: totalSoldPrice,
-        });
+      for (var i = 0; i < res.data.length; i++) {
+        totalBuyPrice += res.data[i].buyPrice;
+        totalSoldPrice += res.data[i].soldPrice;
       }
+
+      this.setState({
+        items: res.data,
+        totalBuy: totalBuyPrice,
+        totalSold: totalSoldPrice,
+      });
     });
+  }
+
+  onChangeStatus(e) {
+    this.setState({
+      sold: false,
+      available: false,
+      all: false,
+      [e.target.value]: true,
+    });
+    this.filtering();
   }
 
   onChangeBuyFromDate(date) {
-    var totalBuyPrice = 0;
-    var totalSoldPrice = 0;
-
     this.setState({
       buyFromDate: date,
-      buyToDate: 0,
-      soldFromDate: 0,
-      soldToDate: 0,
     });
-    axios.get("http://localhost:5000/items").then((res) => {
-      var elements = res.data.filter((el) => el.buyDate >= date.toISOString());
-      for (var i = 0; i < elements.length; i++) {
-        totalBuyPrice += elements[i].buyPrice;
-        totalSoldPrice += elements[i].soldPrice;
-      }
-      this.setState({
-        items: elements,
-        totalBuy: totalBuyPrice,
-        totalSold: totalSoldPrice,
-      });
-    });
+    this.filtering();
   }
 
   onChangeBuyToDate(date) {
-    var totalBuyPrice = 0;
-    var totalSoldPrice = 0;
     this.setState({
       buyToDate: date,
-      buyFromDate: 0,
-      soldFromDate: 0,
-      soldToDate: 0,
     });
-    axios.get("http://localhost:5000/items").then((res) => {
-      var elements = res.data.filter((el) => el.buyDate <= date.toISOString());
-      for (var i = 0; i < elements.length; i++) {
-        totalBuyPrice += elements[i].buyPrice;
-        totalSoldPrice += elements[i].soldPrice;
-      }
-      this.setState({
-        items: elements,
-        totalBuy: totalBuyPrice,
-        totalSold: totalSoldPrice,
-      });
-    });
+    this.filtering();
   }
 
   onChangeSoldFromDate(date) {
-    var totalBuyPrice = 0;
-    var totalSoldPrice = 0;
     this.setState({
       soldFromDate: date,
-      soldToDate: 0,
-      buyFromDate: 0,
-      buyToDate: 0,
     });
-    axios.get("http://localhost:5000/items").then((res) => {
-      var elements = res.data.filter((el) => el.soldDate >= date.toISOString());
-      for (var i = 0; i < elements.length; i++) {
-        totalBuyPrice += elements[i].buyPrice;
-        totalSoldPrice += elements[i].soldPrice;
-      }
-      this.setState({
-        items: elements,
-        totalBuy: totalBuyPrice,
-        totalSold: totalSoldPrice,
-      });
-    });
+    this.filtering();
   }
 
   onChangeSoldToDate(date) {
-    var totalBuyPrice = 0;
-    var totalSoldPrice = 0;
     this.setState({
       soldToDate: date,
-      buyFromDate: 0,
-      buyToDate: 0,
-      soldFromDate: 0,
     });
-    axios.get("http://localhost:5000/items").then((res) => {
-      var elements = res.data.filter((el) => el.soldDate <= date.toISOString());
-      for (var i = 0; i < elements.length; i++) {
-        totalBuyPrice += elements[i].buyPrice;
-        totalSoldPrice += elements[i].soldPrice;
-      }
-      this.setState({
-        items: elements,
-        totalBuy: totalBuyPrice,
-        totalSold: totalSoldPrice,
-      });
-    });
+    this.filtering();
   }
 
-  onChangeBuyFromDatePeriod(date) {
+  filtering = () => {
+    axios.get("http://localhost:5000/items").then((res) => {
+      var elements;
+
+      if (this.state.sold) {
+        elements = res.data.filter((el) => el.soldPrice !== 0);
+      } else if (this.state.available) {
+        elements = res.data.filter((el) => el.soldPrice === 0);
+      } else {
+        elements = res.data;
+      }
+
+      if (this.state.buyFromDate !== 0 && this.state.buyToDate !== 0) {
+        elements = elements.filter(
+          (el) =>
+            el.buyDate <= this.state.buyToDate.toISOString() &&
+            el.buyDate >= this.state.buyFromDate.toISOString()
+        );
+      } else if (this.state.buyFromDate !== 0) {
+        elements = elements.filter(
+          (el) => el.buyDate >= this.state.buyFromDate.toISOString()
+        );
+      } else if (this.state.buyToDate !== 0) {
+        elements = elements.filter(
+          (el) => el.buyDate <= this.state.buyToDate.toISOString()
+        );
+      }
+      if (this.state.soldFromDate !== 0 && this.state.soldToDate !== 0) {
+        elements = elements.filter(
+          (el) =>
+            el.soldDate <= this.state.soldToDate.toISOString() &&
+            el.soldDate >= this.state.soldFromDate.toISOString()
+        );
+      } else if (this.state.soldFromDate !== 0) {
+        elements = elements.filter(
+          (el) => el.buyDate >= this.state.soldFromDate.toISOString()
+        );
+      } else if (this.state.soldToDate !== 0) {
+        elements = elements.filter(
+          (el) => el.soldDate <= this.state.soldToDate.toISOString()
+        );
+      }
+      this.setState({
+        items: [],
+        items: elements,
+      });
+      this.priceCalucating(elements);
+    });
+  };
+
+  priceCalucating = (elements) => {
     var totalBuyPrice = 0;
     var totalSoldPrice = 0;
+    for (var i = 0; i < elements.length; i++) {
+      totalBuyPrice += elements[i].buyPrice;
+      totalSoldPrice += elements[i].soldPrice;
+    }
 
     this.setState({
-      buyFromDatePeriod: date,
-      soldFromDatePeriod: 0,
-      soldToDatePeriod: 0,
+      totalBuy: totalBuyPrice,
+      totalSold: totalSoldPrice,
     });
-    const toDate = new Date(this.state.buyToDatePeriod);
-    const zeroDate = "Wed Dec 31 1969 19:00:00 GMT-0500".toISOString;
-    axios.get("http://localhost:5000/items").then((res) => {
-      if (toDate.toISOString() !== 0 && toDate !== null) {
-        console.log("true");
-        console.log(toDate);
-        var elements = res.data.filter(
-          (el) =>
-            el.buyDate <= toDate.toISOString() &&
-            el.buyDate >= date.toISOString()
-        );
-      } else {
-        console.log("true");
-
-        var elements = res.data.filter(
-          (el) => el.buyDate >= date.toISOString()
-        );
-      }
-      for (var i = 0; i < elements.length; i++) {
-        totalBuyPrice += elements[i].buyPrice;
-        totalSoldPrice += elements[i].soldPrice;
-      }
-      this.setState({
-        items: elements,
-        totalBuy: totalBuyPrice,
-        totalSold: totalSoldPrice,
-      });
-    });
-  }
-
-  onChangeBuyToDatePeriod(date) {
-    var totalBuyPrice = 0;
-    var totalSoldPrice = 0;
-    this.setState({
-      buyToDatePeriod: date,
-      soldFromDatePeriod: 0,
-      soldToDatePeriod: 0,
-    });
-
-    const fromDate = new Date(this.state.buyFromDatePeriod);
-
-    axios.get("http://localhost:5000/items").then((res) => {
-      if (fromDate.toISOString() !== 0 && fromDate !== null) {
-        var elements = res.data.filter(
-          (el) =>
-            el.buyDate <= date.toISOString() &&
-            el.buyDate >= fromDate.toISOString()
-        );
-      } else {
-        var elements = res.data.filter(
-          (el) => el.buyDate <= date.toISOString()
-        );
-      }
-      for (var i = 0; i < elements.length; i++) {
-        totalBuyPrice += elements[i].buyPrice;
-        totalSoldPrice += elements[i].soldPrice;
-      }
-      this.setState({
-        items: elements,
-        totalBuy: totalBuyPrice,
-        totalSold: totalSoldPrice,
-      });
-    });
-  }
-
-  onChangeSoldFromDatePeriod(date) {
-    var totalBuyPrice = 0;
-    var totalSoldPrice = 0;
-    this.setState({
-      soldFromDatePeriod: date,
-      buyFromDatePeriod: 0,
-      buyToDatePeriod: 0,
-    });
-    const toDate = new Date(this.state.soldToDatePeriod);
-
-    axios.get("http://localhost:5000/items").then((res) => {
-      if (toDate.toISOString() !== 0 && toDate !== null) {
-        var elements = res.data.filter(
-          (el) =>
-            el.soldDate >= date.toISOString() &&
-            el.soldDate <= toDate.toISOString()
-        );
-      } else {
-        var elements = res.data.filter(
-          (el) => el.soldDate >= date.toISOString()
-        );
-      }
-      for (var i = 0; i < elements.length; i++) {
-        totalBuyPrice += elements[i].buyPrice;
-        totalSoldPrice += elements[i].soldPrice;
-      }
-      this.setState({
-        items: elements,
-        totalBuy: totalBuyPrice,
-        totalSold: totalSoldPrice,
-      });
-    });
-  }
-
-  onChangeSoldToDatePeriod(date) {
-    var totalBuyPrice = 0;
-    var totalSoldPrice = 0;
-    this.setState({
-      soldToDatePeriod: date,
-      buyFromDatePeriod: 0,
-      buyToDatePeriod: 0,
-    });
-    const fromDate = new Date(this.state.soldFromDatePeriod);
-
-    axios.get("http://localhost:5000/items").then((res) => {
-      if (fromDate.toISOString() !== 0 && fromDate !== null) {
-        var elements = res.data.filter(
-          (el) =>
-            el.soldDate <= date.toISOString() &&
-            el.soldDate >= fromDate.toISOString()
-        );
-      } else {
-        var elements = res.data.filter(
-          (el) => el.soldDate <= date.toISOString()
-        );
-      }
-      for (var i = 0; i < elements.length; i++) {
-        totalBuyPrice += elements[i].buyPrice;
-        totalSoldPrice += elements[i].soldPrice;
-      }
-      this.setState({
-        items: elements,
-        totalBuy: totalBuyPrice,
-        totalSold: totalSoldPrice,
-      });
-    });
-  }
+  };
 
   openDetail(id) {
     window.location = "/details/" + id;
@@ -566,7 +408,6 @@ export default class Items extends Component {
       soldPrice: this.state.soldPrice,
       soldDate: this.state.soldDate,
     };
-    console.log(item);
 
     axios
       .post("http://localhost:5000/items/update/" + this.state.id, item)
@@ -585,7 +426,7 @@ export default class Items extends Component {
               <button id="modal" onClick={this.onClose}>
                 X
               </button>
-              <h3 id="hPopup">Sold Peice</h3>
+              <h3 id="hPopup">Sold Price</h3>
               <form onSubmit={this.onSubmit}>
                 <div id="divSize">
                   <label id="lInput">Sold price </label>
@@ -633,6 +474,7 @@ export default class Items extends Component {
                         type="radio"
                         value="sold"
                         name="status"
+                        checked={this.state.sold}
                         onChange={this.onChangeStatus}
                       />
                       <label className="lRadioFilter">Available</label>
@@ -641,6 +483,7 @@ export default class Items extends Component {
                         type="radio"
                         value="available"
                         name="status"
+                        checked={this.state.available}
                         onChange={this.onChangeStatus}
                       />
                       <label className="lRadioFilter">All</label>
@@ -649,6 +492,7 @@ export default class Items extends Component {
                         type="radio"
                         value="all"
                         name="status"
+                        checked={this.state.all}
                         onChange={this.onChangeStatus}
                       />
                     </div>
@@ -657,8 +501,8 @@ export default class Items extends Component {
                     <div className="dFilter">
                       <label className="lDateFilter">Buy Date</label>
                     </div>
-                    <div className="dDatePicker">
-                      <div className="dateDiv">
+                    <div className="dDatePickerP">
+                      <div className="dateDivP">
                         <div className="dateDiv1">
                           <label className="labelDate">From </label>
                         </div>
@@ -670,7 +514,7 @@ export default class Items extends Component {
                           />
                         </div>
                       </div>
-                      <div className="dateDiv" id="dateDivBuy">
+                      <div className="dateDivP" id="dateDivBuy">
                         <div className="dateDiv2">
                           <label className="labelDateTo">To </label>
                         </div>
@@ -688,8 +532,8 @@ export default class Items extends Component {
                     <div className="dFilter">
                       <label className="lDateFilter">Sold Date</label>
                     </div>
-                    <div className="dDatePicker">
-                      <div className="dateDiv">
+                    <div className="dDatePickerP">
+                      <div className="dateDivP">
                         <div className="dateDiv1">
                           <label className="labelDate">From </label>
                         </div>
@@ -701,7 +545,7 @@ export default class Items extends Component {
                           />
                         </div>
                       </div>
-                      <div className="dateDiv" id="dateDivSold">
+                      <div className="dateDivP" id="dateDivSold">
                         <div className="dateDiv2">
                           <label className="labelDateTo">To </label>
                         </div>
@@ -715,67 +559,10 @@ export default class Items extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="divsFilter">
-                    <div className="dFilter">
-                      <label className="lDateFilter">Buy Period</label>
-                    </div>
-                    <div className="dDatePickerP">
-                      <div className="dateDivP">
-                        <div className="dateDiv1">
-                          <label className="labelDate">From </label>
-                        </div>
-                        <div className="dateDiv1">
-                          <DatePicker
-                            className="dateFilter"
-                            selected={this.state.buyFromDatePeriod}
-                            onChange={this.onChangeBuyFromDatePeriod}
-                          />
-                        </div>
-                      </div>
-                      <div className="dateDivP" id="dateDivBuy">
-                        <div className="dateDiv2">
-                          <label className="labelDateTo">To </label>
-                        </div>
-                        <div className="dateDiv2">
-                          <DatePicker
-                            className="dateFilter"
-                            selected={this.state.buyToDatePeriod}
-                            onChange={this.onChangeBuyToDatePeriod}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="divsFilter">
-                    <div className="dFilter">
-                      <label className="lDateFilter">Sold Period</label>
-                    </div>
-                    <div className="dDatePickerP">
-                      <div className="dateDivP">
-                        <div className="dateDiv1">
-                          <label className="labelDate">From </label>
-                        </div>
-                        <div className="dateDiv1">
-                          <DatePicker
-                            className="dateFilter"
-                            selected={this.state.soldFromDatePeriod}
-                            onChange={this.onChangeSoldFromDatePeriod}
-                          />
-                        </div>
-                      </div>
-                      <div className="dateDivP" id="dateDivSold">
-                        <div className="dateDiv2">
-                          <label className="labelDateTo">To </label>
-                        </div>
-                        <div className="dateDiv2">
-                          <DatePicker
-                            className="dateFilter"
-                            selected={this.state.soldToDatePeriod}
-                            onChange={this.onChangeSoldToDatePeriod}
-                          />
-                        </div>
-                      </div>
-                    </div>
+                  <div>
+                    <button id="buttonRefresh" onClick={this.refreshFilter}>
+                      Refresh Filter
+                    </button>
                   </div>
                 </div>
                 <table>
