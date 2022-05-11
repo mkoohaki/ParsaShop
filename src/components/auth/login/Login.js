@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { login } from '../../../actions/auth';
 import './login.css';
 
 export const Login = () => {
@@ -19,7 +20,7 @@ export const Login = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    login(formData);
   };
 
   return (
