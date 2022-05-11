@@ -1,9 +1,12 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { login } from '../../../actions/auth';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import './login.css';
 
-export const Login = () => {
+const Login = ({ login, isAuthenticated }) => {
+  const history = useHistory();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -22,6 +25,11 @@ export const Login = () => {
     e.preventDefault();
     login(formData);
   };
+
+  //Redirect if logged in
+  if (isAuthenticated) {
+    history.push('/');
+  }
 
   return (
     <div id='user'>
@@ -57,3 +65,14 @@ export const Login = () => {
     </div>
   );
 };
+
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { login })(Login);
