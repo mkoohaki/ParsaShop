@@ -8,7 +8,7 @@ import ItemsList from './Items';
 import ItemDetails from './ItemDetails';
 
 import Login from '../components/auth/login/Login';
-import { Register } from '../components/auth/register/Register';
+import Register from '../components/auth/register/Register';
 
 export default class index extends Component {
   render() {

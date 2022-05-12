@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { register } from '../../../actions/auth';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import './register.css';
 
-export const Register = () => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
   const history = useHistory();
   const [formData, setFormData] = useState({
     type: 'user',
@@ -24,8 +26,12 @@ export const Register = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     register(formData);
-    history.push('/');
   };
+
+  //Redirect if logged in
+  if (isAuthenticated) {
+    history.push('/');
+  }
 
   return (
     <div id='user'>
@@ -83,3 +89,13 @@ export const Register = () => {
     </div>
   );
 };
+
+Register.propTypes = {
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+export default connect(mapStateToProps, { register })(Register);
