@@ -13,11 +13,12 @@ import {
 export const loadUser = () => async (dispatch) => {
   try {
     const res = await api.get('/auth');
-
-    dispatch({
-      type: USER_LOADED,
-      payload: res.data,
-    });
+    if (res) {
+      dispatch({
+        type: USER_LOADED,
+        payload: res.data,
+      });
+    }
   } catch (error) {
     const errors = error.response.data.errors;
     dispatch({
@@ -60,3 +61,6 @@ export const login = (formData) => async (dispatch) => {
     });
   }
 };
+
+// Logout
+export const logout = () => ({ type: LOGOUT });

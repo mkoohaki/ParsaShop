@@ -7,7 +7,7 @@ const { check, validationResult } = require('express-validator');
 
 const User = require('../models/user.model');
 
-// @route   POST api/users
+// @route   GET api/users
 // @desc    Return all users
 // @access  public
 router.get('/', async (req, res) => {
@@ -18,6 +18,20 @@ router.get('/', async (req, res) => {
     } else {
       res.json({ msg: 'No users found' });
     }
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// @route   Delete api/user
+// @desc    delete user via id
+// @access  public
+router.delete('/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await User.findByIdAndDelete(id);
+    res.json({ msg: 'User deleted', data: user });
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server error');

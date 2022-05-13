@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Navbar from './Navbar';
 import CreateItem from './Item';
 import EditItem from './EditItem';
 import ItemsList from './Items';
 import ItemDetails from './ItemDetails';
 
+import Navbar from '../components/layout/Navbar';
 import Login from '../components/auth/login/Login';
 import Register from '../components/auth/register/Register';
 
