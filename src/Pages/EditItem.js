@@ -206,10 +206,7 @@ export default class EditItem extends Component {
     };
     console.log(item);
     axios
-      .post(
-        "http://localhost:5000/items/update/" + this.props.match.params.id,
-        item
-      )
+      .put("http://localhost:5000/items/" + this.props.match.params.id, item)
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err));
 

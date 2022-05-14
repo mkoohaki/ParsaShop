@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import CreateItem from './Item';
 import EditItem from './EditItem';
@@ -16,28 +16,28 @@ export default class index extends Component {
       <div>
         <Router>
           <Navbar />
-          <img src='../../logo.svg' alt='' className='logo' />
+          <img src="../../logo.svg" alt="" className="logo" />
           <br />
           <br />
           <Switch>
-            <Route exact path='/'>
+            <Route exact path="/">
               <ItemsList />
             </Route>
-            <Route path='/create'>
+            <Route path="/create">
               <CreateItem />
             </Route>
             <Route
-              path='/update/:id'
+              path="/update/:id"
               render={(props) => <EditItem {...props} />}
             />
-            <Route path='/login'>
+            <Route path="/login">
               <Login />
             </Route>
-            <Route path='/register'>
+            <Route path="/register">
               <Register />
             </Route>
             <Route
-              path='/details/:id'
+              path="/details/:id"
               render={(props) => <ItemDetails {...props} />}
             />
           </Switch>
