@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 
 const Navbar = ({ auth: { isAuthenticated, user }, logout }) => {
   let userType = '';
-  if (isAuthenticated) {
+
+  if (user) {
     userType = user.type.toLowerCase();
   }
 
@@ -46,6 +47,9 @@ const Navbar = ({ auth: { isAuthenticated, user }, logout }) => {
       </li>
       <li>
         <Link to='/register'>Register</Link>
+      </li>
+      <li>
+        <Link to='/login'>Login</Link>
       </li>
     </ul>
   );

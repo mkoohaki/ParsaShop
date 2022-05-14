@@ -11,19 +11,22 @@ import {
 
 // Load User
 export const loadUser = () => async (dispatch) => {
-  try {
-    const res = await api.get('/auth');
-    if (res) {
+  // Prevents call if token does not exist
+  if (localStorage.getItem('token')) {
+    try {
+      const res = await api.get('/auth');
+      if (res) {
+        dispatch({
+          type: USER_LOADED,
+          payload: res.data,
+        });
+      }
+    } catch (error) {
+      const errors = error.response.data.errors;
       dispatch({
-        type: USER_LOADED,
-        payload: res.data,
+        type: AUTH_ERROR,
       });
     }
-  } catch (error) {
-    const errors = error.response.data.errors;
-    dispatch({
-      type: AUTH_ERROR,
-    });
   }
 };
 
@@ -49,6 +52,7 @@ export const register = (formData) => async (dispatch) => {
 export const login = (formData) => async (dispatch) => {
   try {
     const res = await api.post('/auth', formData);
+
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data,
