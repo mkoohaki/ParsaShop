@@ -1,23 +1,70 @@
 import api from '../utils/api';
+import {
+  REGISTER_SUCCESS,
+  USER_LOADED,
+  AUTH_ERROR,
+  LOGIN_SUCCESS,
+  LOGOUT,
+  LOGIN_FAIL,
+  REGISTER_FAIL,
+} from './types';
+
+// Load User
+export const loadUser = () => async (dispatch) => {
+  // Prevents call if token does not exist
+  if (localStorage.getItem('token')) {
+    try {
+      const res = await api.get('/auth');
+      if (res) {
+        dispatch({
+          type: USER_LOADED,
+          payload: res.data,
+        });
+      }
+    } catch (error) {
+      const errors = error.response.data.errors;
+      dispatch({
+        type: AUTH_ERROR,
+      });
+    }
+  }
+};
 
 // Register User
-export const register = async (formData) => {
+export const register = (formData) => async (dispatch) => {
   try {
     const res = await api.post('/users', formData);
+
+    dispatch({
+      type: REGISTER_SUCCESS,
+      payload: res.data,
+    });
+    dispatch(loadUser());
   } catch (error) {
     const errors = error.response.data.errors;
-    console.log(errors);
+    dispatch({
+      type: REGISTER_FAIL,
+    });
   }
 };
 
-// Register User
-export const login = async (formData) => {
+// User Login
+export const login = (formData) => async (dispatch) => {
   try {
     const res = await api.post('/auth', formData);
-    const token = res.data;
-    localStorage.setItem('token', token);
+
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data,
+    });
+    dispatch(loadUser());
   } catch (error) {
     const errors = error.response.data.errors;
-    console.log(errors);
+    dispatch({
+      type: LOGIN_FAIL,
+    });
   }
 };
+
+// Logout
+export const logout = () => ({ type: LOGOUT });
