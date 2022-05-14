@@ -8,22 +8,22 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const Item = (props) => (
   <tr>
-    <td className="column1" onClick={() => props.openDetail(props.item._id)}>
+    <td className='column1' onClick={() => props.openDetail(props.item._id)}>
       {props.item.type}
     </td>
-    <td className="column2" onClick={() => props.openDetail(props.item._id)}>
+    <td className='column2' onClick={() => props.openDetail(props.item._id)}>
       {props.item.brand}
     </td>
-    <td className="column3" onClick={() => props.openDetail(props.item._id)}>
+    <td className='column3' onClick={() => props.openDetail(props.item._id)}>
       {props.item.model}
     </td>
-    <td className="column4" onClick={() => props.openDetail(props.item._id)}>
+    <td className='column4' onClick={() => props.openDetail(props.item._id)}>
       {props.item.color}
     </td>
-    <td className="column5" onClick={() => props.openDetail(props.item._id)}>
+    <td className='column5' onClick={() => props.openDetail(props.item._id)}>
       {props.item.sex}
     </td>
-    <td className="column6" onClick={() => props.openDetail(props.item._id)}>
+    <td className='column6' onClick={() => props.openDetail(props.item._id)}>
       {Object.entries(props.item.size)
         .filter(([key, value]) => value === true)
         .map(([key, value], i, arr) => {
@@ -34,43 +34,43 @@ const Item = (props) => (
           }
         })}
     </td>
-    <td className="column7" onClick={() => props.openDetail(props.item._id)}>
+    <td className='column7' onClick={() => props.openDetail(props.item._id)}>
       {props.item.qty}
     </td>
-    <td className="column8" onClick={() => props.openDetail(props.item._id)}>
+    <td className='column8' onClick={() => props.openDetail(props.item._id)}>
       {props.item.description}
     </td>
-    <td className="column9" onClick={() => props.openDetail(props.item._id)}>
+    <td className='column9' onClick={() => props.openDetail(props.item._id)}>
       {props.item.buyFrom}
     </td>
-    <td className="column10" onClick={() => props.openDetail(props.item._id)}>
+    <td className='column10' onClick={() => props.openDetail(props.item._id)}>
       {props.item.buyPrice}
     </td>
-    <td className="column11" onClick={() => props.openDetail(props.item._id)}>
+    <td className='column11' onClick={() => props.openDetail(props.item._id)}>
       {props.item.buyDate.substring(0, 10)}
     </td>
-    <td className="column12" onClick={() => props.openDetail(props.item._id)}>
+    <td className='column12' onClick={() => props.openDetail(props.item._id)}>
       {props.item.soldPrice || "-"}
     </td>
-    <td className="column13" onClick={() => props.openDetail(props.item._id)}>
+    <td className='column13' onClick={() => props.openDetail(props.item._id)}>
       {props.item.soldDate !== "2000-01-01T05:00:00.000Z"
         ? props.item.soldDate.substring(0, 10)
         : "-"}
     </td>
-    <td className="column14">
-      <Link className="edit" to={"/update/" + props.item._id}>
+    <td className='column14'>
+      <Link className='edit' to={"/update/" + props.item._id}>
         Edit
       </Link>
       |
       <a
-        className="delete"
-        href="#"
+        className='delete'
+        href='#'
         onClick={() => props.deleteItem(props.item._id)}
       >
         Delete
       </a>
       |
-      <button className="sold" onClick={() => props.soldItem(props.item._id)}>
+      <button className='sold' onClick={() => props.soldItem(props.item._id)}>
         Sold
       </button>
     </td>
@@ -107,6 +107,8 @@ export default class Items extends Component {
       sold: false,
       available: false,
       all: false,
+      soldPrice: 0,
+      soldDate: 0,
       buyFromDate: 0,
       buyToDate: 0,
       soldFromDate: 0,
@@ -130,7 +132,7 @@ export default class Items extends Component {
     var totalBuyPrice = 0;
     var totalSoldPrice = 0;
 
-    axios.get("http://localhost:5000/items").then((res) => {
+    axios.get("http://localhost:5000/api/items").then((res) => {
       for (var i = 0; i < res.data.length; i++) {
         totalBuyPrice += res.data[i].buyPrice;
         totalSoldPrice += res.data[i].soldPrice;
@@ -146,7 +148,7 @@ export default class Items extends Component {
 
   deleteItem(id) {
     axios
-      .delete("http://localhost:5000/items/" + id)
+      .delete("http://localhost:5000/api/items/" + id)
       .then((res) => console.log(res.data));
 
     this.setState({
@@ -175,7 +177,7 @@ export default class Items extends Component {
       },
     });
 
-    axios.get("http://localhost:5000/items/" + id).then((item) => {
+    axios.get("http://localhost:5000/api/items/" + id).then((item) => {
       this.setState({
         type: item.data.type,
         brand: item.data.brand,
@@ -257,7 +259,7 @@ export default class Items extends Component {
       soldToPrice: "",
     });
 
-    axios.get("http://localhost:5000/items").then((res) => {
+    axios.get("http://localhost:5000/api/items").then((res) => {
       for (var i = 0; i < res.data.length; i++) {
         totalBuyPrice += res.data[i].buyPrice;
         totalSoldPrice += res.data[i].soldPrice;
@@ -338,7 +340,7 @@ export default class Items extends Component {
   }
 
   filtering = () => {
-    axios.get("http://localhost:5000/items").then((res) => {
+    axios.get("http://localhost:5000/api/items").then((res) => {
       var elements;
 
       if (this.state.sold) {
@@ -460,7 +462,7 @@ export default class Items extends Component {
     };
 
     axios
-      .post("http://localhost:5000/items/update/" + this.state.id, item)
+      .put("http://localhost:5000/api/items/" + this.state.id, item)
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err));
 
@@ -469,39 +471,39 @@ export default class Items extends Component {
 
   render() {
     return (
-      <div className="limiter">
-        <div id="mainDiv" style={this.state.mainDivStyle}>
+      <div className='limiter'>
+        <div id='mainDiv' style={this.state.mainDivStyle}>
           {this.state.seenPopeup ? (
-            <div id="dSolding">
-              <button id="modal" onClick={this.onClose}>
+            <div id='dSolding'>
+              <button id='modal' onClick={this.onClose}>
                 X
               </button>
-              <h3 id="hPopup">Sold Price</h3>
+              <h3 id='hPopup'>Sold Price</h3>
               <form onSubmit={this.onSubmit}>
-                <div id="divSize">
-                  <label id="lInput">Sold price </label>
+                <div id='divSize'>
+                  <label id='lInput'>Sold price </label>
                   <input
-                    type="text"
+                    type='text'
                     required
-                    className="pInput"
+                    className='pInput'
                     value={this.state.soldPrice}
                     onChange={this.onChangePrice}
                   />
                 </div>
-                <div id="divSizeD">
-                  <label id="lInputD">Sold Date </label>
+                <div id='divSizeD'>
+                  <label id='lInputD'>Sold Date </label>
                   <DatePicker
-                    className="pInput"
-                    id="datepicker"
+                    className='pInput'
+                    id='datepicker'
                     selected={this.state.soldDate}
                     onChange={this.onChangeSoldDate}
                   />
                 </div>
                 <input
-                  className="button"
-                  id="sButton"
-                  type="submit"
-                  value="Submit"
+                  className='button'
+                  id='sButton'
+                  type='submit'
+                  value='Submit'
                 />
               </form>
             </div>
@@ -509,68 +511,68 @@ export default class Items extends Component {
         </div>
 
         {this.state.seenTable ? (
-          <div className="container-table100">
-            <div className="wrap-table100">
-              <div className="table100">
-                <div id="filters">
-                  <div className="divsFilter">
-                    <div className="dFilter">
-                      <label id="lRadioFilter">Status</label>
+          <div className='container-table100'>
+            <div className='wrap-table100'>
+              <div className='table100'>
+                <div id='filters'>
+                  <div className='divsFilter'>
+                    <div className='dFilter'>
+                      <label id='lRadioFilter'>Status</label>
                     </div>
-                    <div className="dRadioFilter">
-                      <label className="lRadioFilter">Sold</label>
+                    <div className='dRadioFilter'>
+                      <label className='lRadioFilter'>Sold</label>
                       <input
-                        className="inputRadio"
-                        type="radio"
-                        value="sold"
-                        name="status"
+                        className='inputRadio'
+                        type='radio'
+                        value='sold'
+                        name='status'
                         checked={this.state.sold}
                         onChange={this.onChangeStatus}
                       />
-                      <label className="lRadioFilter">Available</label>
+                      <label className='lRadioFilter'>Available</label>
                       <input
-                        className="inputRadio"
-                        type="radio"
-                        value="available"
-                        name="status"
+                        className='inputRadio'
+                        type='radio'
+                        value='available'
+                        name='status'
                         checked={this.state.available}
                         onChange={this.onChangeStatus}
                       />
-                      <label className="lRadioFilter">All</label>
+                      <label className='lRadioFilter'>All</label>
                       <input
-                        className="inputRadio"
-                        type="radio"
-                        value="all"
-                        name="status"
+                        className='inputRadio'
+                        type='radio'
+                        value='all'
+                        name='status'
                         checked={this.state.all}
                         onChange={this.onChangeStatus}
                       />
                     </div>
                   </div>
-                  <div className="divsFilter">
-                    <div className="dFilter">
-                      <label className="lDateFilter">Buy Date</label>
+                  <div className='divsFilter'>
+                    <div className='dFilter'>
+                      <label className='lDateFilter'>Buy Date</label>
                     </div>
-                    <div className="dDatePickerP">
-                      <div className="dateDivP">
-                        <div className="dateDiv1">
-                          <label className="labelDate">From </label>
+                    <div className='dDatePickerP'>
+                      <div className='dateDivP'>
+                        <div className='dateDiv1'>
+                          <label className='labelDate'>From </label>
                         </div>
-                        <div className="dateDiv1">
+                        <div className='dateDiv1'>
                           <DatePicker
-                            className="dateFilter"
+                            className='dateFilter'
                             selected={this.state.buyFromDate}
                             onChange={this.onChangeBuyFromDate}
                           />
                         </div>
                       </div>
-                      <div className="dateDivP" id="dateDivBuy">
-                        <div className="dateDiv2">
-                          <label className="labelDateTo">To </label>
+                      <div className='dateDivP' id='dateDivBuy'>
+                        <div className='dateDiv2'>
+                          <label className='labelDateTo'>To </label>
                         </div>
-                        <div className="dateDiv2">
+                        <div className='dateDiv2'>
                           <DatePicker
-                            className="dateFilter"
+                            className='dateFilter'
                             selected={this.state.buyToDate}
                             onChange={this.onChangeBuyToDate}
                           />
@@ -578,30 +580,30 @@ export default class Items extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="divsFilter">
-                    <div className="dFilter">
-                      <label className="lDateFilter">Sold Date</label>
+                  <div className='divsFilter'>
+                    <div className='dFilter'>
+                      <label className='lDateFilter'>Sold Date</label>
                     </div>
-                    <div className="dDatePickerP">
-                      <div className="dateDivP">
-                        <div className="dateDiv1">
-                          <label className="labelDate">From </label>
+                    <div className='dDatePickerP'>
+                      <div className='dateDivP'>
+                        <div className='dateDiv1'>
+                          <label className='labelDate'>From </label>
                         </div>
-                        <div className="dateDiv1">
+                        <div className='dateDiv1'>
                           <DatePicker
-                            className="dateFilter"
+                            className='dateFilter'
                             selected={this.state.soldFromDate}
                             onChange={this.onChangeSoldFromDate}
                           />
                         </div>
                       </div>
-                      <div className="dateDivP" id="dateDivSold">
-                        <div className="dateDiv2">
-                          <label className="labelDateTo">To </label>
+                      <div className='dateDivP' id='dateDivSold'>
+                        <div className='dateDiv2'>
+                          <label className='labelDateTo'>To </label>
                         </div>
-                        <div className="dateDiv2">
+                        <div className='dateDiv2'>
                           <DatePicker
-                            className="dateFilter"
+                            className='dateFilter'
                             selected={this.state.soldToDate}
                             onChange={this.onChangeSoldToDate}
                           />
@@ -609,32 +611,32 @@ export default class Items extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="divsFilter">
-                    <div className="dFilter">
-                      <label className="lDateFilter">Buy Price</label>
+                  <div className='divsFilter'>
+                    <div className='dFilter'>
+                      <label className='lDateFilter'>Buy Price</label>
                     </div>
-                    <div className="dDatePickerP">
-                      <div className="dateDivP">
-                        <div className="dateDiv1">
-                          <label className="labelDate">From </label>
+                    <div className='dDatePickerP'>
+                      <div className='dateDivP'>
+                        <div className='dateDiv1'>
+                          <label className='labelDate'>From </label>
                         </div>
-                        <div className="dateDiv1">
+                        <div className='dateDiv1'>
                           <input
-                            type="text"
-                            className="dateFilter"
+                            type='text'
+                            className='dateFilter'
                             value={this.state.buyFromPrice}
                             onChange={this.onChangeBuyFromPrice}
                           />
                         </div>
                       </div>
-                      <div className="dateDivP" id="dateDivBuy">
-                        <div className="dateDiv2">
-                          <label className="labelDateTo">To </label>
+                      <div className='dateDivP' id='dateDivBuy'>
+                        <div className='dateDiv2'>
+                          <label className='labelDateTo'>To </label>
                         </div>
-                        <div className="dateDiv2">
+                        <div className='dateDiv2'>
                           <input
-                            type="text"
-                            className="dateFilter"
+                            type='text'
+                            className='dateFilter'
                             value={this.state.buyToPrice}
                             onChange={this.onChangeBuyToPrice}
                           />
@@ -642,32 +644,32 @@ export default class Items extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="divsFilter">
-                    <div className="dFilter">
-                      <label className="lDateFilter">Sold Price</label>
+                  <div className='divsFilter'>
+                    <div className='dFilter'>
+                      <label className='lDateFilter'>Sold Price</label>
                     </div>
-                    <div className="dDatePickerP">
-                      <div className="dateDivP">
-                        <div className="dateDiv1">
-                          <label className="labelDate">From </label>
+                    <div className='dDatePickerP'>
+                      <div className='dateDivP'>
+                        <div className='dateDiv1'>
+                          <label className='labelDate'>From </label>
                         </div>
-                        <div className="dateDiv1">
+                        <div className='dateDiv1'>
                           <input
-                            type="text"
-                            className="dateFilter"
+                            type='text'
+                            className='dateFilter'
                             value={this.state.soldFromPrice}
                             onChange={this.onChangeSoldFromPrice}
                           />
                         </div>
                       </div>
-                      <div className="dateDivP" id="dateDivBuy">
-                        <div className="dateDiv2">
-                          <label className="labelDateTo">To </label>
+                      <div className='dateDivP' id='dateDivBuy'>
+                        <div className='dateDiv2'>
+                          <label className='labelDateTo'>To </label>
                         </div>
-                        <div className="dateDiv2">
+                        <div className='dateDiv2'>
                           <input
-                            type="text"
-                            className="dateFilter"
+                            type='text'
+                            className='dateFilter'
                             value={this.state.soldToPrice}
                             onChange={this.onChangeSoldToPrice}
                           />
@@ -676,40 +678,40 @@ export default class Items extends Component {
                     </div>
                   </div>
                   <div>
-                    <button id="buttonRefresh" onClick={this.refreshFilter}>
+                    <button id='buttonRefresh' onClick={this.refreshFilter}>
                       Refresh Filter
                     </button>
                   </div>
                 </div>
                 <table>
                   <thead>
-                    <tr className="table100-head">
-                      <th className="column1">Type</th>
-                      <th className="column2">Brand</th>
-                      <th className="column3">Model</th>
-                      <th className="column4">Color</th>
-                      <th className="column5">Sex</th>
-                      <th className="column6">Size(s)</th>
-                      <th className="column7">QTY</th>
-                      <th className="column8">Description</th>
-                      <th className="column9">Buy From</th>
-                      <th className="column10">$ Buy Price</th>
-                      <th className="column11">Buy Date</th>
-                      <th className="column12">$ Sold Price</th>
-                      <th className="column13">Sold Date</th>
-                      <th className="column14">Actions</th>
+                    <tr className='table100-head'>
+                      <th className='column1'>Type</th>
+                      <th className='column2'>Brand</th>
+                      <th className='column3'>Model</th>
+                      <th className='column4'>Color</th>
+                      <th className='column5'>Sex</th>
+                      <th className='column6'>Size(s)</th>
+                      <th className='column7'>QTY</th>
+                      <th className='column8'>Description</th>
+                      <th className='column9'>Buy From</th>
+                      <th className='column10'>$ Buy Price</th>
+                      <th className='column11'>Buy Date</th>
+                      <th className='column12'>$ Sold Price</th>
+                      <th className='column13'>Sold Date</th>
+                      <th className='column14'>Actions</th>
                     </tr>
                   </thead>
                   <tbody>{this.itemsList()}</tbody>
                 </table>
-                <div id="result">
-                  <div className="resultD">
-                    <h4 className="resultH">${this.state.totalBuy}</h4>
-                    <p className="resultL">Total Purchase</p>
+                <div id='result'>
+                  <div className='resultD'>
+                    <h4 className='resultH'>${this.state.totalBuy}</h4>
+                    <p className='resultL'>Total Purchase</p>
                   </div>
-                  <div className="resultD">
-                    <h4 className="resultH">${this.state.totalSold}</h4>
-                    <p className="resultL" id="resultL2">
+                  <div className='resultD'>
+                    <h4 className='resultH'>${this.state.totalSold}</h4>
+                    <p className='resultL' id='resultL2'>
                       Total Sale
                     </p>
                   </div>

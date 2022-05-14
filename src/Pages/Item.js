@@ -166,7 +166,7 @@ export default class Item extends Component {
       if (item.sex !== "") {
         if (sizeExist) {
           axios
-            .post("http://localhost:5000/items/add", item)
+            .post("http://localhost:5000/api/items/", item)
             .then((res) => console.log(res.data));
 
           window.location = "/";
@@ -180,10 +180,10 @@ export default class Item extends Component {
 
   render() {
     return (
-      <div id="item">
+      <div id='item'>
         <h3>Creating New Item</h3>
         <form onSubmit={this.onSubmit}>
-          <div id="form1">
+          <div id='form1'>
             {/* <div className="divs">
               <label>Image</label>
               <input
@@ -193,14 +193,14 @@ export default class Item extends Component {
                 onChange={this.onChangeImage}
               />
             </div> */}
-            <div className="divs">
+            <div className='divs'>
               <label>Type</label>
               <select
                 required
                 value={this.state.type}
                 onChange={this.onChangeType}
               >
-                <option value="" defaultValue disabled hidden>
+                <option value='' defaultValue disabled hidden>
                   Select Type
                 </option>
                 <option>Clothing</option>
@@ -209,367 +209,367 @@ export default class Item extends Component {
                 <option>Others</option>
               </select>
             </div>
-            <div className="divs">
+            <div className='divs'>
               <label>Brand</label>
               <input
-                type="text"
+                type='text'
                 required
                 value={this.state.brand}
                 onChange={this.onChangeBrand}
               />
             </div>
-            <div className="divs">
+            <div className='divs'>
               <label>Model</label>
               <input
-                type="text"
+                type='text'
                 required
                 value={this.state.model}
                 onChange={this.onChangeModel}
               />
             </div>
-            <div className="divs">
-              <div id="dSex">
-                <label id="lRadio">Sex</label>
+            <div className='divs'>
+              <div id='dSex'>
+                <label id='lRadio'>Sex</label>
               </div>
-              <div id="dRadio">
+              <div id='dRadio'>
                 <input
-                  className="inputRadio"
-                  type="radio"
-                  value="M"
-                  name="gender"
+                  className='inputRadio'
+                  type='radio'
+                  value='M'
+                  name='gender'
                   // checked={this.state.sex}
                   onChange={this.onChangeSex}
                 />
-                <label className="lRadio">Male</label>
+                <label className='lRadio'>Male</label>
                 <input
-                  className="inputRadio"
-                  type="radio"
-                  value="F"
-                  name="gender"
+                  className='inputRadio'
+                  type='radio'
+                  value='F'
+                  name='gender'
                   onChange={this.onChangeSex}
                 />
-                <label className="lRadio">Female</label>
+                <label className='lRadio'>Female</label>
                 <input
-                  className="inputRadio"
-                  type="radio"
-                  value="U"
-                  name="gender"
+                  className='inputRadio'
+                  type='radio'
+                  value='U'
+                  name='gender'
                   onChange={this.onChangeSex}
                 />
-                <label className="lRadio">Unisex</label>
+                <label className='lRadio'>Unisex</label>
               </div>
             </div>
-            <div className="divs">
-              <div id="dSize">
+            <div className='divs'>
+              <div id='dSize'>
                 <label>Size</label>
               </div>
-              <div className="dCheckBox">
-                <div id="dCheckBox1">
-                  <div className="box">
+              <div className='dCheckBox'>
+                <div id='dCheckBox1'>
+                  <div className='box'>
                     <input
-                      type="checkbox"
-                      value="4"
+                      type='checkbox'
+                      value='4'
                       onChange={this.onChangeSize}
                     />
-                    <label className="lCheckBox">4</label>
+                    <label className='lCheckBox'>4</label>
                   </div>
-                  <div className="box">
+                  <div className='box'>
                     <input
-                      type="checkbox"
-                      value="4.5"
+                      type='checkbox'
+                      value='4.5'
                       onChange={this.onChangeSize}
                     />
-                    <label className="lCheckBox">4.5</label>
+                    <label className='lCheckBox'>4.5</label>
                   </div>
-                  <div className="box">
+                  <div className='box'>
                     <input
-                      type="checkbox"
-                      value="5"
+                      type='checkbox'
+                      value='5'
                       onChange={this.onChangeSize}
                     />
-                    <label className="lCheckBox">5</label>
+                    <label className='lCheckBox'>5</label>
                   </div>
-                  <div className="box">
+                  <div className='box'>
                     <input
-                      type="checkbox"
-                      value="5.5"
+                      type='checkbox'
+                      value='5.5'
                       onChange={this.onChangeSize}
                     />
-                    <label className="lCheckBox">5.5</label>
+                    <label className='lCheckBox'>5.5</label>
                   </div>
-                  <div className="box">
+                  <div className='box'>
                     <input
-                      type="checkbox"
-                      value="6"
+                      type='checkbox'
+                      value='6'
                       onChange={this.onChangeSize}
                     />
-                    <label className="lCheckBox">6</label>
+                    <label className='lCheckBox'>6</label>
                   </div>
-                  <div className="box">
+                  <div className='box'>
                     <input
-                      type="checkbox"
-                      value="6.5"
+                      type='checkbox'
+                      value='6.5'
                       onChange={this.onChangeSize}
                     />
-                    <label className="lCheckBox">6.5</label>
+                    <label className='lCheckBox'>6.5</label>
                   </div>
-                  <div className="box">
+                  <div className='box'>
                     <input
-                      type="checkbox"
-                      value="7"
+                      type='checkbox'
+                      value='7'
                       onChange={this.onChangeSize}
                     />
-                    <label className="lCheckBox">7</label>
-                  </div>
-                </div>
-                <div id="dCheckBox2">
-                  <div className="box">
-                    <input
-                      type="checkbox"
-                      value="7.5"
-                      onChange={this.onChangeSize}
-                    />
-                    <label className="lCheckBox">7.5</label>
-                  </div>
-                  <div className="box">
-                    <input
-                      type="checkbox"
-                      value="8"
-                      onChange={this.onChangeSize}
-                    />
-                    <label className="lCheckBox">8</label>
-                  </div>
-                  <div className="box">
-                    <input
-                      type="checkbox"
-                      value="8.5"
-                      onChange={this.onChangeSize}
-                    />
-                    <label className="lCheckBox">8.5</label>
-                  </div>
-                  <div className="box">
-                    <input
-                      type="checkbox"
-                      value="9"
-                      onChange={this.onChangeSize}
-                    />
-                    <label className="lCheckBox">9</label>
-                  </div>
-                  <div className="box">
-                    <input
-                      type="checkbox"
-                      value="9.5"
-                      onChange={this.onChangeSize}
-                    />
-                    <label className="lCheckBox">9.5</label>
-                  </div>
-                  <div className="box">
-                    <input
-                      type="checkbox"
-                      value="10"
-                      onChange={this.onChangeSize}
-                    />
-                    <label className="lCheckBox">10</label>
-                  </div>
-                  <div className="box">
-                    <input
-                      type="checkbox"
-                      value="10.5"
-                      onChange={this.onChangeSize}
-                    />
-                    <label className="lCheckBox">10.5</label>
+                    <label className='lCheckBox'>7</label>
                   </div>
                 </div>
-                <div id="dCheckBox3">
-                  <div className="box">
+                <div id='dCheckBox2'>
+                  <div className='box'>
                     <input
-                      type="checkbox"
-                      value="11"
+                      type='checkbox'
+                      value='7.5'
                       onChange={this.onChangeSize}
                     />
-                    <label className="lCheckBox">11</label>
+                    <label className='lCheckBox'>7.5</label>
                   </div>
-                  <div className="box">
+                  <div className='box'>
                     <input
-                      type="checkbox"
-                      value="11.5"
+                      type='checkbox'
+                      value='8'
                       onChange={this.onChangeSize}
                     />
-                    <label className="lCheckBox">11.5</label>
+                    <label className='lCheckBox'>8</label>
                   </div>
-                  <div className="box">
+                  <div className='box'>
                     <input
-                      type="checkbox"
-                      value="12"
+                      type='checkbox'
+                      value='8.5'
                       onChange={this.onChangeSize}
                     />
-                    <label className="lCheckBox">12</label>
+                    <label className='lCheckBox'>8.5</label>
                   </div>
-                  <div className="box">
+                  <div className='box'>
                     <input
-                      type="checkbox"
-                      value="12.5"
+                      type='checkbox'
+                      value='9'
                       onChange={this.onChangeSize}
                     />
-                    <label className="lCheckBox">12.5</label>
+                    <label className='lCheckBox'>9</label>
                   </div>
-                  <div className="box">
+                  <div className='box'>
                     <input
-                      type="checkbox"
-                      value="13"
+                      type='checkbox'
+                      value='9.5'
                       onChange={this.onChangeSize}
                     />
-                    <label className="lCheckBox">13</label>
+                    <label className='lCheckBox'>9.5</label>
                   </div>
-                  <div className="box">
+                  <div className='box'>
                     <input
-                      type="checkbox"
-                      value="13.5"
+                      type='checkbox'
+                      value='10'
                       onChange={this.onChangeSize}
                     />
-                    <label className="lCheckBox">13.5</label>
+                    <label className='lCheckBox'>10</label>
                   </div>
-                  <div className="box">
+                  <div className='box'>
                     <input
-                      type="checkbox"
-                      value="14"
+                      type='checkbox'
+                      value='10.5'
                       onChange={this.onChangeSize}
                     />
-                    <label className="lCheckBox">14</label>
+                    <label className='lCheckBox'>10.5</label>
                   </div>
                 </div>
-                <div id="dCheckBox4">
-                  <div className="box">
+                <div id='dCheckBox3'>
+                  <div className='box'>
                     <input
-                      type="checkbox"
-                      value="XS"
+                      type='checkbox'
+                      value='11'
                       onChange={this.onChangeSize}
                     />
-                    <label className="lCheckBox">XS</label>
+                    <label className='lCheckBox'>11</label>
                   </div>
-                  <div className="box">
+                  <div className='box'>
                     <input
-                      type="checkbox"
-                      value="S"
+                      type='checkbox'
+                      value='11.5'
                       onChange={this.onChangeSize}
                     />
-                    <label className="lCheckBox">S</label>
+                    <label className='lCheckBox'>11.5</label>
                   </div>
-                  <div className="box">
+                  <div className='box'>
                     <input
-                      type="checkbox"
-                      value="M"
+                      type='checkbox'
+                      value='12'
                       onChange={this.onChangeSize}
                     />
-                    <label className="lCheckBox">M</label>
+                    <label className='lCheckBox'>12</label>
                   </div>
-                  <div className="box">
+                  <div className='box'>
                     <input
-                      type="checkbox"
-                      value="L"
+                      type='checkbox'
+                      value='12.5'
                       onChange={this.onChangeSize}
                     />
-                    <label className="lCheckBox">L</label>
+                    <label className='lCheckBox'>12.5</label>
                   </div>
-                  <div className="box">
+                  <div className='box'>
                     <input
-                      type="checkbox"
-                      value="XL"
+                      type='checkbox'
+                      value='13'
                       onChange={this.onChangeSize}
                     />
-                    <label className="lCheckBox">XL</label>
+                    <label className='lCheckBox'>13</label>
                   </div>
-                  <div className="box">
+                  <div className='box'>
                     <input
-                      type="checkbox"
-                      value="XXL"
+                      type='checkbox'
+                      value='13.5'
                       onChange={this.onChangeSize}
                     />
-                    <label className="lCheckBox">XXL</label>
+                    <label className='lCheckBox'>13.5</label>
                   </div>
-                  <div className="box">
+                  <div className='box'>
                     <input
-                      type="checkbox"
-                      value="XXXL"
+                      type='checkbox'
+                      value='14'
                       onChange={this.onChangeSize}
                     />
-                    <label className="lCheckBox">XXXL</label>
+                    <label className='lCheckBox'>14</label>
+                  </div>
+                </div>
+                <div id='dCheckBox4'>
+                  <div className='box'>
+                    <input
+                      type='checkbox'
+                      value='XS'
+                      onChange={this.onChangeSize}
+                    />
+                    <label className='lCheckBox'>XS</label>
+                  </div>
+                  <div className='box'>
+                    <input
+                      type='checkbox'
+                      value='S'
+                      onChange={this.onChangeSize}
+                    />
+                    <label className='lCheckBox'>S</label>
+                  </div>
+                  <div className='box'>
+                    <input
+                      type='checkbox'
+                      value='M'
+                      onChange={this.onChangeSize}
+                    />
+                    <label className='lCheckBox'>M</label>
+                  </div>
+                  <div className='box'>
+                    <input
+                      type='checkbox'
+                      value='L'
+                      onChange={this.onChangeSize}
+                    />
+                    <label className='lCheckBox'>L</label>
+                  </div>
+                  <div className='box'>
+                    <input
+                      type='checkbox'
+                      value='XL'
+                      onChange={this.onChangeSize}
+                    />
+                    <label className='lCheckBox'>XL</label>
+                  </div>
+                  <div className='box'>
+                    <input
+                      type='checkbox'
+                      value='XXL'
+                      onChange={this.onChangeSize}
+                    />
+                    <label className='lCheckBox'>XXL</label>
+                  </div>
+                  <div className='box'>
+                    <input
+                      type='checkbox'
+                      value='XXXL'
+                      onChange={this.onChangeSize}
+                    />
+                    <label className='lCheckBox'>XXXL</label>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div id="form2">
-            <div className="divs">
+          <div id='form2'>
+            <div className='divs'>
               <label>Color</label>
               <input
-                type="text"
+                type='text'
                 required
                 value={this.state.color}
                 onChange={this.onChangeColor}
               />
             </div>
-            <div className="description">
+            <div className='description'>
               <label>Description</label>
               <input
-                type="text"
+                type='text'
                 required
                 value={this.state.description}
                 onChange={this.onChangeDescription}
               />
             </div>
-            <div className="divs">
+            <div className='divs'>
               <label>Quantity</label>
               <input
-                type="text"
+                type='text'
                 required
                 value={this.state.qty}
                 onChange={this.onChangeQty}
               />
             </div>
-            <div className="divs">
+            <div className='divs'>
               <label>Buy From </label>
               <input
-                type="text"
+                type='text'
                 value={this.state.buyFrom}
                 onChange={this.onChangeBuyFrom}
               />
             </div>
-            <div className="divs">
+            <div className='divs'>
               <label>Buy Price </label>
               <input
-                type="text"
+                type='text'
                 value={this.state.buyPrice}
                 onChange={this.onChangeBuyPrice}
               />
             </div>
-            <div className="divs">
+            <div className='divs'>
               <label>Buy Date </label>
               <DatePicker
-                className="date"
+                className='date'
                 selected={this.state.buyDate}
                 onChange={this.onChangeBuyDate}
               />
             </div>
-            <div className="divs">
+            <div className='divs'>
               <label>Sold Price </label>
               <input
-                type="text"
+                type='text'
                 value={this.state.soldPrice}
                 onChange={this.onChangeSoldPrice}
               />
             </div>
-            <div className="divs">
+            <div className='divs'>
               <label>Sold Date </label>
               <DatePicker
-                className="date"
+                className='date'
                 selected={this.state.soldDate}
                 onChange={this.onChangeSoldDate}
               />
             </div>
           </div>
           <div>
-            <input className="button" type="submit" value="Add New Item" />
+            <input className='button' type='submit' value='Add New Item' />
           </div>
         </form>
       </div>
