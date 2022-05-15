@@ -11,7 +11,7 @@ const Navbar = ({ auth: { isAuthenticated, user }, logout }) => {
   }
 
   const authLinks =
-    userType == 'staff' ? (
+    userType === 'staff' ? (
       <ul>
         <li>
           <Link to='/'>Home</Link>

@@ -6,6 +6,8 @@ import {
 const initialState = {
   items: null,
   item: null,
+  totalPurchase: 0,
+  totalSold: 0,
   loading: true,
 };
 
@@ -17,6 +19,8 @@ function itemsReducer(state = initialState, action) {
       return {
         ...state,
         items: payload,
+        totalPurchased: payload.reduce((acc, item) => acc + item.buyPrice, 0),
+        totalSold: payload.reduce((acc, item) => acc + item.soldPrice, 0),
         loading: false,
       };
     case ITEMS_RETRIEVAL_ERROR:
