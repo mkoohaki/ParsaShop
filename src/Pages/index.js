@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import CreateItem from "./Item";
-import EditItem from "./EditItem";
-import ItemsList from "./Items";
-import ItemDetails from "./ItemDetails";
+import CreateItem from './Item';
+import EditItem from './EditItem';
+import ItemDetails from './ItemDetails';
 
-import Navbar from "../components/layout/Navbar";
-import Login from "../components/auth/login/Login";
-import Register from "../components/auth/register/Register";
+import Navbar from '../components/layout/Navbar';
+import Login from '../components/auth/login/Login';
+import Register from '../components/auth/register/Register';
+import Items from '../components/items/Items';
 
 export default class index extends Component {
   render() {
@@ -21,7 +21,7 @@ export default class index extends Component {
           <br />
           <Switch>
             <Route exact path='/'>
-              <ItemsList />
+              <Items />
             </Route>
             <Route path='/create'>
               <CreateItem />

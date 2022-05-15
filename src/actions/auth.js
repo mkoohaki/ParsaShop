@@ -1,4 +1,4 @@
-import api from "../utils/api";
+import api from '../utils/api';
 import {
   REGISTER_SUCCESS,
   USER_LOADED,
@@ -7,14 +7,14 @@ import {
   LOGOUT,
   LOGIN_FAIL,
   REGISTER_FAIL,
-} from "./types";
+} from './types';
 
 // Load User
 export const loadUser = () => async (dispatch) => {
   // Prevents call if token does not exist
-  if (localStorage.getItem("token")) {
+  if (localStorage.getItem('token') == typeof str) {
     try {
-      const res = await api.get("/auth");
+      const res = await api.get('/auth');
       if (res) {
         dispatch({
           type: USER_LOADED,
@@ -22,7 +22,6 @@ export const loadUser = () => async (dispatch) => {
         });
       }
     } catch (error) {
-      const errors = error.response.data.errors;
       dispatch({
         type: AUTH_ERROR,
       });
@@ -33,7 +32,7 @@ export const loadUser = () => async (dispatch) => {
 // Register User
 export const register = (formData) => async (dispatch) => {
   try {
-    const res = await api.post("/users", formData);
+    const res = await api.post('/users', formData);
 
     dispatch({
       type: REGISTER_SUCCESS,
@@ -41,7 +40,6 @@ export const register = (formData) => async (dispatch) => {
     });
     dispatch(loadUser());
   } catch (error) {
-    const errors = error.response.data.errors;
     dispatch({
       type: REGISTER_FAIL,
     });
@@ -51,7 +49,7 @@ export const register = (formData) => async (dispatch) => {
 // User Login
 export const login = (formData) => async (dispatch) => {
   try {
-    const res = await api.post("/auth", formData);
+    const res = await api.post('/auth', formData);
 
     dispatch({
       type: LOGIN_SUCCESS,
@@ -59,7 +57,6 @@ export const login = (formData) => async (dispatch) => {
     });
     dispatch(loadUser());
   } catch (error) {
-    const errors = error.response.data.errors;
     dispatch({
       type: LOGIN_FAIL,
     });
