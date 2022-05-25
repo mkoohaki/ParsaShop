@@ -32,12 +32,13 @@ h3 {
 
 #form1 {
     float: left;
-    width: 50%;
+    width: 45%;
+    margin-right: 10%;
 }
 
 #form2 {
     overflow: hidden;
-    width: 50%;
+    width: 45%;
 }
 
 input,
@@ -221,8 +222,8 @@ select option {
 
 #dCheckBox1{
     float: left;
-    width:20%;
-    margin-left: 5%;
+    width: 20%;
+    margin-left: 3%;
 }
 
 #dCheckBox2, #dCheckBox3,
@@ -233,7 +234,6 @@ select option {
 }
 
 .lCheckBox {
-    margin-left: -20px;
 }
 
 .box {
@@ -247,6 +247,7 @@ select option {
     width: 80%;
     border: 3px solid white;
     border-radius: 10px;
+    padding-top: 7px;
 }
 
 .dRadioFilter {

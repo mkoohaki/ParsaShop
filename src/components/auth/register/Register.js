@@ -1,17 +1,17 @@
-import { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { register } from '../../../actions/auth';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import './register.css';
+import { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { register } from "../../../actions/auth";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import "./register.css";
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
   const history = useHistory();
   const [formData, setFormData] = useState({
-    type: 'user',
-    name: '',
-    email: '',
-    password: '',
+    type: "user",
+    name: "",
+    email: "",
+    password: "",
   });
 
   const { type, name, email, password } = formData;
@@ -30,7 +30,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 
   //Redirect if logged in
   if (isAuthenticated) {
-    history.push('/');
+    history.push("/");
   }
 
   return (
