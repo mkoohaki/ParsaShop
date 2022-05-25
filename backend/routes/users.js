@@ -1,40 +1,40 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const config = require('config');
-const { check, validationResult } = require('express-validator');
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const config = require("config");
+const { check, validationResult } = require("express-validator");
 
-const User = require('../models/user.model');
+const User = require("../models/user.model");
 
 // @route   GET api/users
 // @desc    Return all users
 // @access  public
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
-    const users = await User.find().select('-hashedPassword -salt');
+    const users = await User.find().select("-hashedPassword -salt");
     if (users.length > 0) {
       res.json(users);
     } else {
-      res.json({ msg: 'No users found' });
+      res.json({ msg: "No users found" });
     }
   } catch (error) {
     console.error(error.message);
-    res.status(500).send('Server error');
+    res.status(500).send("Server error");
   }
 });
 
 // @route   Delete api/user
 // @desc    delete user via id
 // @access  public
-router.delete('/:id', async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const user = await User.findByIdAndDelete(id);
-    res.json({ msg: 'User deleted', data: user });
+    res.json({ msg: "User deleted", data: user });
   } catch (error) {
     console.error(error.message);
-    res.status(500).send('Server error');
+    res.status(500).send("Server error");
   }
 });
 
@@ -42,11 +42,11 @@ router.delete('/:id', async (req, res) => {
 // @desc    Register user
 // @access  public
 router.post(
-  '/',
+  "/",
   [
-    check('name', 'Name is required').not().isEmpty(),
-    check('email', 'Please provide a valid email').isEmail(),
-    check('password', 'Password must be longer than 6 characters').isLength({
+    check("name", "Name is required").not().isEmpty(),
+    check("email", "Please provide a valid email").isEmail(),
+    check("password", "Password must be longer than 6 characters").isLength({
       min: 6,
     }),
   ],
@@ -64,7 +64,7 @@ router.post(
       if (user) {
         return res
           .status(400)
-          .json({ errors: [{ msg: 'User already exits' }] });
+          .json({ errors: [{ msg: "User already exits" }] });
       }
 
       user = new User({
@@ -87,7 +87,7 @@ router.post(
       };
       jwt.sign(
         payload,
-        config.get('jwtSecret'),
+        config.get("jwtSecret"),
         { expiresIn: 3600 },
         (err, token) => {
           if (err) throw err;
@@ -96,7 +96,7 @@ router.post(
       );
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server error');
+      res.status(500).send("Server error");
     }
   }
 );
